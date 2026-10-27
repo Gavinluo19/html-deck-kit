@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML Deck Kit · 主题展示</title>
+<style>
+:root{--bg:#F5F3EC;--card:#FBFAF6;--line:#DDD7C8;--ink:#1F1E1B;--ink2:#5C5A53;--ink3:#8A877D;--acc:#C9623F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14130F;--card:#1D1C1A;--line:#34322D;--ink:#EFEBE1;--ink2:#C9C3B6;--ink3:#8F8A7E;--acc:#E08A63}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Sans SC","Noto Sans CJK SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+.wrap{max-width:1160px;margin:0 auto;padding:40px 20px 80px}
+h1{font:700 40px/1.2 "Noto Serif SC","Noto Serif CJK SC","Songti SC",serif;margin:0 0 8px}
+h2{font:700 26px/1.3 "Noto Serif SC","Noto Serif CJK SC","Songti SC",serif;margin:48px 0 14px}
+.lede{color:var(--ink2);font-size:18px;max-width:46em}
+.eyebrow{color:var(--acc);letter-spacing:.14em;font-size:14px;font-weight:600}
+img{max-width:100%;display:block;border-radius:10px;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.card h3{margin:0;font-size:20px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card h3 code{font-size:13px;color:var(--ink3);font-weight:400}
+.card p{margin:0;color:var(--ink2);font-size:15px}
+.sw{display:flex;gap:6px;flex-wrap:wrap}
+.sw span{display:flex;flex-direction:column;align-items:center;gap:3px;font:11px ui-monospace,Menlo,monospace;color:var(--ink3)}
+.sw i{display:block;width:44px;height:30px;border-radius:6px;border:1px solid rgba(0,0,0,.12)}
+.card a{color:var(--acc);font-weight:600;text-decoration:none;font-size:15px}
+.card a:hover{text-decoration:underline}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--ink3);font-weight:500;font-size:13px;letter-spacing:.08em}
+.note{color:var(--ink3);font-size:13px;margin-top:10px}
+kbd{font:12px ui-monospace,Menlo,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--card)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">HTML DECK KIT · 主题展示</div>
+  <h1>一套规范，六种视觉</h1>
+  <p class="lede">所有主题共用同一组颜色变量。页面结构不变，按 <kbd>T</kbd> 即可切换；也可以在模板网址后加 <code>?theme=主题id</code> 打开指定主题。</p>
+  <img src="img/overview-covers.jpg" alt="六套主题封面对比">
+
+  <h2>逐个主题</h2>
+  <div class="grid" id="themes"></div>
+
+  <h2>同一页，六种主题</h2>
+  <img src="img/overview-content.jpg" alt="同一页全课地图在六套主题下的效果">
+
+  <h2>Token 对照</h2>
+  <div style="overflow-x:auto"><table id="tok"></table></div>
+  <p class="note">主题中不含任何品牌标志或专有字体。</p>
+</div>
+<script>
+const T=[
+ {id:'warm',name:'暖纸 · warm（默认）',mood:'温暖、学术、像纸质讲义；衬线标题；深色封面配暖色网络动画。',c:{paper:'#F5F3EC',card:'#FBFAF6',ink:'#1F1E1B',clay:'#C9623F',kraft:'#C99A72',sky:'#4F86B8',slate:'#1D1C1A'}},
+ {id:'mono',name:'极简黑白 · mono',mood:'克制、留白、工程感；无衬线；纯黑封面，青绿点缀。',c:{paper:'#FFFFFF',card:'#FAFAFA',ink:'#0D0D0D',clay:'#10A37F',kraft:'#6E6E80',sky:'#2563EB',slate:'#0D0D0D'}},
+ {id:'void',name:'深空 · void',mood:'全深色、高对比、科技感；亮蓝强调，紫色作信息色。',c:{paper:'#000000',card:'#0F1114',ink:'#E7E9EA',clay:'#1D9BF0',kraft:'#8B98A5',sky:'#A78BFA',slate:'#16181C'}},
+ {id:'lunar',name:'月光 · lunar',mood:'清爽、理性、蓝白；深夜蓝封面，月光蓝强调。',c:{paper:'#F7F8FA',card:'#FFFFFF',ink:'#0B0D12',clay:'#1783FF',kraft:'#5B6B86',sky:'#12B886',slate:'#0B0D12'}},
+ {id:'linen',name:'素白 · linen',mood:'安静、编辑感；唯一的浅色封面；墨蓝强调，衬线标题。',c:{paper:'#F8F8F7',card:'#FFFFFF',ink:'#1A1A19',clay:'#34507A',kraft:'#A39E93',sky:'#5F7F5F',slate:'#1A1A19'}},
+ {id:'stellar',name:'星光渐变 · stellar',mood:'明亮、渐变、发布会感；结论强调使用蓝紫粉渐变。',c:{paper:'#FFFFFF',card:'#F8FAFD',ink:'#1F1F1F',clay:'#1A73E8',kraft:'#9B72CB',sky:'#D96570',slate:'#131314'}},
+];
+const keys=['paper','card','ink','clay','kraft','sky','slate'];
+const box=document.getElementById('themes');
+T.forEach(t=>{
+  const el=document.createElement('div');el.className='card';
+  el.innerHTML=`<h3>${t.name}<code>${t.id}</code></h3><img src="img/theme-${t.id}.jpg" alt="${t.name} 主题预览" loading="lazy"><p>${t.mood}</p>
+  <div class="sw">${keys.map(k=>`<span><i style="background:${t.c[k]}"></i>${k}</span>`).join('')}</div>
+  <a href="../template/deck-template.html?theme=${t.id}">打开模板（${t.id}） →</a>`;
+  box.append(el);
+});
+const tb=document.getElementById('tok');
+tb.innerHTML='<tr><th>token</th>'+T.map(t=>`<th>${t.id}</th>`).join('')+'</tr>'+keys.map(k=>'<tr><td><code>--'+(k==='clay'?'clay（主强调）':k==='kraft'?'kraft（次强调）':k==='sky'?'sky（信息色）':k)+'</code></td>'+T.map(t=>`<td><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${t.c[k]};border:1px solid rgba(0,0,0,.15);vertical-align:-1px"></span> ${t.c[k]}</td>`).join('')+'</tr>').join('');
+</script>
+</body>
+</html>
