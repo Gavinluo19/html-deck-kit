@@ -1,4 +1,4 @@
-# HTML Deck Kit · 交付级 HTML 演讲稿规范 · v2.0
+# HTML Deck Kit · 交付级 HTML 演讲稿规范 · v2.1
 
 > 一套**规范 + 母版 + 6 套主题 + AI Skill**。把讲稿交给 AI，按规范生成一个可直接上台、可直接交付的单文件 HTML 演讲稿。
 > 人能读，AI 也能照做：Claude、Codex、WorkBuddy、Trae、飞书智能体都能用。

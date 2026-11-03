@@ -694,6 +694,11 @@ body.safe .slide.active::after{content:"70% 安全线";position:absolute;left:0;
 /* ===== V2.1：正文字号可调（标题与眉标不变） ===== */
 :root{--cz:1.12}
 .slide:not(.hero):not(.act) .body,.slide:not(.hero):not(.act)>.kick,.slide:not(.hero):not(.act)>.insight,.slide:not(.hero):not(.act)>.mdl{zoom:var(--cz)}
+/* V2.1：封面/章节页/结尾页：标题不变，副标题、人物行与章节条跟随字号 */
+.slide.act .q,.slide.act .tracker,.slide.hero .sub2,.slide.hero .who{zoom:var(--cz)}
+#hint .fzv{display:inline-block;min-width:3.2em;text-align:center;color:#EAE5D9;font-variant-numeric:tabular-nums}
+#hint button.fzb{all:unset;cursor:pointer;color:#9b968a;text-decoration:underline;padding:0 2px}
+#hint button.fzb:hover{color:#EAE5D9}
 .slide:not(.hero):not(.act)>.foot{font-size:15px}
 .cav{font-size:14px}
 #fsToast{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:60;background:rgba(20,19,15,.85);color:#EFEBE1;font-size:15px;padding:6px 16px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none}
@@ -1617,14 +1622,45 @@ calc();
 const FK='deckkit-fontzoom';const LV=[1,1.06,1.12,1.18,1.24,1.3];let fz=2;
 try{const v=parseInt(localStorage.getItem(FK),10);if(v>=0&&v<LV.length)fz=v}catch(e){}
 const toast=document.createElement('div');toast.id='fsToast';document.body.append(toast);let tt;
-function applyFz(show){document.documentElement.style.setProperty('--cz',LV[fz]);document.querySelectorAll('.slide').forEach(sl=>{const m=parseFloat(sl.dataset.czmax||'9');sl.style.setProperty('--cz',Math.min(LV[fz],m))});try{localStorage.setItem(FK,String(fz))}catch(e){}
-  if(show){toast.textContent='正文字号 '+Math.round(LV[fz]*100)+'%（按 + / − 调整）';toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),1400)}}
+/* V2.1：按页自动适配。请求档位 LV[fz]；若该页超出安全线，则逐档降低，取不超线的最大档。
+   data-czmax 仍可写在某一页上作为该页的手动上限。 */
+const LIM_BODY=630,LIM_ACT=780,LIM_HERO=735;
+function measureBottom(s){
+  const hero=s.classList.contains('hero'),act=s.classList.contains('act');
+  const sel=hero?'.sub2,.who':act?'.q,.tracker':':scope > .body,:scope > .kick,:scope > .insight,:scope > .mdl';
+  const els=[...s.querySelectorAll(sel)];if(!els.length)return 0;
+  const mv=hero||act?[]:els;const sv=mv.map(e=>e.style.translate);mv.forEach(e=>e.style.translate='');
+  const was=s.classList.contains('active'),disp=s.style.display;if(!was)s.style.display='flex';
+  const r0=s.getBoundingClientRect(),k=r0.height/900||1;let bot=0;
+  els.forEach(e=>{const r=e.getBoundingClientRect();if(r.height>0)bot=Math.max(bot,(r.bottom-r0.top)/k);
+    if(!hero&&!act)e.querySelectorAll('*').forEach(c=>{const q=c.getBoundingClientRect();if(q.height>0)bot=Math.max(bot,(q.bottom-r0.top)/k)})});
+  if(!was)s.style.display=disp;mv.forEach((e,j)=>e.style.translate=sv[j]);return bot}
+function fitSlide(sl){
+  const hero=sl.classList.contains('hero'),act=sl.classList.contains('act');
+  const lim=hero?LIM_HERO:act?LIM_ACT:LIM_BODY,cap=parseFloat(sl.dataset.czmax||'9');
+  let k=fz;while(k>0&&LV[k]>cap)k--;
+  for(;k>0;k--){sl.style.setProperty('--cz',LV[k]);if(measureBottom(sl)<=lim)break}
+  sl.style.setProperty('--cz',LV[k]);sl.dataset.fit=String(LV[k]);return LV[k]}
+function fitAll(){document.querySelectorAll('.slide').forEach(fitSlide)}
+let fzv=null;
+function applyFz(show){
+  document.documentElement.style.setProperty('--cz',LV[fz]);fitAll();
+  try{localStorage.setItem(FK,String(fz))}catch(e){}
+  if(fzv)fzv.textContent=Math.round(LV[fz]*100)+'%';
+  if(show){const cur=document.querySelector('.slide.active'),eff=cur?parseFloat(cur.dataset.fit||LV[fz]):LV[fz];
+    let msg='正文字号 '+Math.round(LV[fz]*100)+'%';
+    if(cur&&Math.abs(eff-LV[fz])>.001)msg+=' · 本页最大 '+Math.round(eff*100)+'%（再大会超出 70% 安全线）';
+    msg+='（按 + / − 调整）';
+    toast.textContent=msg;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),1800)}}
 function bump(d){fz=Math.max(0,Math.min(LV.length-1,fz+d));applyFz(true)}
 applyFz(false);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>applyFz(false));
+new MutationObserver(()=>{clearTimeout(window.__fzT);window.__fzT=setTimeout(()=>applyFz(false),40)}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
   if(e.key==='+'||e.key==='='){e.preventDefault();bump(1)} else if(e.key==='-'||e.key==='_'){e.preventDefault();bump(-1)}});
-const hint=document.getElementById('hint');if(hint){const a=document.createElement('button');a.type='button';a.textContent='字号 A−';a.onclick=e=>{e.stopPropagation();bump(-1)};
-  const b=document.createElement('button');b.type='button';b.textContent='A+';b.onclick=e=>{e.stopPropagation();bump(1)};hint.append(a,b)}
+const hint=document.getElementById('hint');if(hint){const a=document.createElement('button');a.type='button';a.className='fzb';a.textContent='字号 A−';a.onclick=e=>{e.stopPropagation();bump(-1)};
+  fzv=document.createElement('span');fzv.className='fzv';fzv.textContent=Math.round(LV[fz]*100)+'%';
+  const b=document.createElement('button');b.type='button';b.className='fzb';b.textContent='A+';b.onclick=e=>{e.stopPropagation();bump(1)};hint.append(a,fzv,b)}
 /* 截图放大 */
 const lb=document.createElement('div');lb.id='lb';lb.innerHTML='<img alt="">';document.body.append(lb);
 lb.addEventListener('click',e=>{stop(e);lb.classList.remove('on')});
