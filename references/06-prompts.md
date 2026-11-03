@@ -29,11 +29,28 @@
 ```
 你是 HTML 演讲稿制作助手。严格遵守上传的《01-spec 严格规范》。
 输出必须是基于 deck-template.html 的完整单文件 HTML，只增删 <section class="slide">。
+保留母版左下角署名 #tplcredit（Template by Gavin © 2026），不得删除或改字。
 每页：eyebrow + h2 + （用到模型时）mdl 模型标签 + body + kick + foot + aside.notes。
 正文与结论行不得超过画面上方 70%（y ≤ 630px）。
 ```
 
-## 4. 常用指令
+## 4. 修改闭环（v2.0）
+
+把 HTML 里按 E 写好的“修改汇总”复制出来，连同 HTML 交给 AI：
+
+```
+这是演讲稿的修改汇总（格式：【第 N 页 · 页面id】标题 + 意见）。
+请按 html-deck-kit 规范逐页修改：只改列出的页，页面 id 不变；
+改完运行 python3 tools/check_layout.py 文件.html 和 --zoom 1.3，确保没有 OVER。
+```
+
+用筛片台“复制清单”挑页时：
+
+```
+按这份放映清单，生成一个只包含这些页、按此顺序排列的新 HTML，其余页删除，页面 id 不变。
+```
+
+## 5. 常用指令
 
 | 想要 | 这样说 |
 |---|---|

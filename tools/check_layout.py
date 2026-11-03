@@ -38,6 +38,7 @@ async def main(a):
               s.querySelectorAll('.step').forEach(e => e.classList.add('on'));
               const cap = parseFloat(s.dataset.czmax || '9');
               s.style.setProperty('--cz', Math.min({a.zoom}, cap));
+              window.__balance && window.__balance();
               return [s.id, s.className, s.querySelectorAll('.step').length,
                       s.querySelectorAll('aside.notes p[data-s]').length];
             }})()""")
@@ -60,6 +61,14 @@ async def main(a):
             if a.shots:
                 os.makedirs(a.shots, exist_ok=True)
                 await pg.screenshot(path=os.path.join(a.shots, f"{i+1:02d}_{sid}.png"))
+        dup = await pg.evaluate("(()=>{const ids=[...document.querySelectorAll('.slide')].map(s=>s.id);return ids.filter((x,i)=>!x||ids.indexOf(x)!==i)})()")
+        if dup:
+            print("页面 id 缺失或重复（筛片台与修改意见按 id 保存）：", dup)
+            over += 1
+        has_credit = await pg.evaluate("!!document.querySelector('#tplcredit')")
+        if not has_credit:
+            print("缺少左下角署名 #tplcredit（规则 F7）")
+            over += 1
         print(f"\n共 {n} 页；超出 70% 线：{over} 页；脚本错误：{errors or '无'}")
         await b.close()
         sys.exit(1 if over else 0)

@@ -1,9 +1,13 @@
-# HTML Deck Kit · 交付级 HTML 演讲稿规范
+# HTML Deck Kit · 交付级 HTML 演讲稿规范 · v2.0
 
 > 一套**规范 + 母版 + 6 套主题 + AI Skill**。把讲稿交给 AI，按规范生成一个可直接上台、可直接交付的单文件 HTML 演讲稿。
 > 人能读，AI 也能照做：Claude、Codex、WorkBuddy、Trae、飞书智能体都能用。
 
+**作者：Gavin（罗文）**　·　X：[@gavinluo19](https://x.com/gavinluo19)　·　GitHub：[github.com/Gavinluo19](https://github.com/Gavinluo19)
+
 ![六套主题的封面](docs/img/overview-covers.jpg)
+
+> **v2.0 新增**：筛片台（O）拖动排序与整章隐藏 · 修改本页（E）一键汇总给 AI · 演讲者视图下一页缩略图 · 短页自动居中 · 4 个新模板 · 线性图标库 · 字体内嵌工具。详见 [CHANGELOG](CHANGELOG.md)。
 
 ---
 
@@ -28,8 +32,11 @@ HTML Deck Kit 用一份**严格规范**把这些固定下来：版面、字号�
 | 70% 版面规则 | 内容全部在画面上方 70%，大屏后排也看得见；L 键显示安全线 |
 | 字号可调 | + / − 六档放大正文，标题不变；内容满的页面自动停在安全上限 |
 | 6 套主题 | T 键切换：warm、mono、void、lunar、linen、stellar |
-| 13 种页面模板 | 封面、章节页、总分总地图、概念页、模型卡、表格、拆解、案例卡、计算器、四象限、分级卡…… |
+| 17 种页面模板 | 封面、章节页、总分总地图、概念页、模型卡、表格、拆解、案例卡、计算器、四象限、分级卡、章节定位、截图编号批注、手机截图引线、金句页…… |
 | 自动检查 | `tools/check_layout.py` 逐页检查 70% 规则与讲稿段数 |
+| 筛片台 *v2.0* | O 键：缩略图按章节分组，拖动改顺序，单页 / 整章隐藏，复制放映清单 |
+| 修改闭环 *v2.0* | E 键：逐页写修改意见，“修改汇总”一键复制给 AI 按页修改 |
+| 离线字体 *v2.0* | `tools/embed_fonts.py` 只内嵌用到的字，断网、换电脑显示一致 |
 
 ## 3. 六套主题
 
@@ -72,11 +79,29 @@ HTML Deck Kit 用一份**严格规范**把这些固定下来：版面、字号�
 
 > 主题中不含任何品牌标志或专有字体。
 
+## 3b. v2.0 新功能一览
+
+**筛片台（O）**：同一份完整稿，按场合挑页、改顺序。
+
+![筛片台](docs/img/v2-sorter.jpg)
+
+**修改本页（E）与修改汇总**：边看边记，最后一次复制给 AI。
+
+![修改意见](docs/img/v2-feedback.jpg)
+
+**演讲者视图（P）**：现在说什么、下一步、下一页缩略图、计时。
+
+![演讲者视图](docs/img/v2-presenter.jpg)
+
+**4 个新模板**：章节定位页、截图编号批注、手机截图 + 引线批注、金句页（标题重点词用 `<mark>`）。
+
+![新模板](docs/img/v2-templates.jpg)
+
 ## 4. 快速开始
 
 ### 方式 A：直接用模板（不用 AI）
 
-1. 打开 `template/deck-template.html`，看 13 种示例页。
+1. 打开 `template/deck-template.html`，看 17 种示例页。
 2. 复制需要的 `<section class="slide">`，改文字。
 3. 改 `<html data-theme="warm">` 选默认主题。
 
@@ -111,18 +136,19 @@ y=630  ├ ─ ─ ─ ─ ─ ─ ─ 70% 安全线（L 键） ─ ─ ─ ─ 
 y=900  └──────────────────────────────────────────┘
 ```
 
-**不可违反的 10 条：**
+**不可违反的 11 条：**
 
 1. 单文件 HTML，1600×900 画布，不改引擎。
 2. 正文与结论行全部在 y ≤ 630px；结论行紧跟正文。
 3. 标题 46px、眉标 17px 固定；正文 ≥ 18px。
-4. 每页有 id、标题、重点、时长和逐字稿；讲稿段数 = 弹出步数 + 1。
+4. 每页有 id（唯一，确定后不改）、标题、重点、时长和逐字稿；讲稿段数 = 弹出步数 + 1。
 5. 默认一次性展示；只有“先问后答 / 层层深挖 / 案例拆解”才逐步弹出，每页 ≤ 4 步。
 6. 用到模型的页面必须写出模型名 + 一句白话；模型卡只讲一次，默认隐藏。
 7. 概念用三段式：一句话 / 生活例子 / 怎么用。
 8. 数字与引语照抄并写出处；模拟数据、示意、解读写进页脚“说明”。
 9. 不放视频；不用品牌标志；颜色只用变量。
 10. 必须有“总—分—总”全课地图页。
+11. 保留左下角署名“Template by Gavin © 2026”（暗淡显示，鼠标移上才加亮）。
 
 ## 6. 快捷键
 
@@ -134,23 +160,27 @@ y=900  └───────────────────────�
 | **T** | 换主题 | **V** | 精讲 / 完整 |
 | **+ / −** | 正文字号 | **L** | 70% 安全线 |
 | H | 显示隐藏页 | B | 从模型卡返回 |
+| **O** | 筛片台 | **E** | 修改本页 / 修改汇总 |
 
 ## 7. 目录结构
 
 ```
 html-deck-kit/
-├── SKILL.md                    # AI Skill 入口：工作流程 + 10 条硬规则
+├── SKILL.md                    # AI Skill 入口：工作流程 + 11 条硬规则
 ├── README.md                   # 本文档（给人看，也给 AI 看）
 ├── references/
 │   ├── 01-spec.md              # 严格规范（必须 / 应该 / 可以）
-│   ├── 02-components.md        # 13 种页面模板 + 组件类名
+│   ├── 02-components.md        # 17 种页面模板 + 组件类名
 │   ├── 03-themes.md            # 6 套主题与 token 表、新增主题规则
 │   ├── 04-interaction.md       # 快捷键、讲稿规则、交互约束
 │   ├── 05-checklist.md         # 交付检查清单
-│   └── 06-prompts.md           # Claude / Codex / WorkBuddy / 飞书 的用法
-├── template/deck-template.html # 母版：引擎 + 6 套主题 + 13 种示例页
+│   ├── 06-prompts.md           # Claude / Codex / WorkBuddy / 飞书 的用法 + 修改闭环
+│   └── 07-icons.md             # 18 个线性图标（v2.0）
+├── CHANGELOG.md                # 更新记录
+├── template/deck-template.html # 母版：引擎 + 6 套主题 + 17 种示例页
 ├── themes/themes.css           # 主题层（与母版内一致，便于单独查看）
 ├── tools/check_layout.py       # 70% 规则与讲稿检查（Playwright）
+├── tools/embed_fonts.py        # 字体子集化内嵌（可选，v2.0）
 └── docs/
     ├── showcase.html           # 主题展示页（本地打开）
     └── img/                    # 预览图
@@ -164,7 +194,11 @@ html-deck-kit/
 4. 写完运行 `python3 tools/check_layout.py <文件>` 与 `--zoom 1.3`，直到没有 `OVER`。
 5. 不确定的事实写“材料未注明”；模拟内容在页脚 `.cav` 注明。
 
-## 9. 许可
+## 9. 署名
+
+母版左下角有一行暗淡的小字“Template by Gavin © 2026”，鼠标移上才加亮，点击可打开作者 GitHub。规范要求使用者保留它（规则 F7）：它不影响版面，也不在 70% 检查范围内。
+
+## 10. 许可
 
 代码与规范以 [MIT License](LICENSE) 发布。Author: [Gavin Luo](https://github.com/Gavinluo19) · X [@gavinluo19](https://x.com/gavinluo19)。
 
@@ -172,4 +206,4 @@ html-deck-kit/
 
 ### English summary
 
-**HTML Deck Kit** is a strict specification, a single-file HTML deck template, six color themes, and an AI Skill for building presentation-ready HTML slide decks (1600×900, speaker notes per step, core/full length toggle, hidden "model cards", a 70% layout rule for big screens, adjustable body font size). Give the whole folder to your AI agent and ask it to read `SKILL.md` and `references/01-spec.md` first.
+**HTML Deck Kit v2.0** is a strict specification, a single-file HTML deck template, six color themes, and an AI Skill for building presentation-ready HTML slide decks (1600×900, speaker notes per step, core/full length toggle, hidden "model cards", a 70% layout rule for big screens, adjustable body font size). v2.0 adds a slide sorter (O: drag to reorder, hide pages or whole chapters), per-slide revision notes (E: copy all notes to your AI in one go), a next-slide preview in presenter view, four new page templates, a line-icon set and an optional font-embedding tool. Give the whole folder to your AI agent and ask it to read `SKILL.md` and `references/01-spec.md` first.

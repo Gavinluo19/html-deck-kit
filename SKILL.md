@@ -1,6 +1,6 @@
 ---
 name: html-deck-kit
-description: 按“HTML Deck Kit”严格规范制作交付级 HTML 演讲稿（1600×900 单文件、逐字稿、精讲/完整两档、模型卡、70% 版面规则、6 套主题）。当用户要做或改 HTML 演讲稿、课件、培训/分享 slides，或提到 deck-kit、演讲稿规范、换主题时使用。
+description: 按“HTML Deck Kit”v2.0 严格规范制作交付级 HTML 演讲稿（1600×900 单文件、逐字稿、精讲/完整两档、模型卡、70% 版面规则、6 套主题、筛片台与逐页修改意见）。当用户要做或改 HTML 演讲稿、课件、培训/分享 slides，或提到 deck-kit、演讲稿规范、换主题时使用。
 ---
 
 # HTML Deck Kit · 演讲稿规范 Skill
@@ -17,6 +17,8 @@ description: 按“HTML Deck Kit”严格规范制作交付级 HTML 演讲稿（
 | `references/04-interaction.md` | 写讲稿、做交互、说明快捷键时 |
 | `references/05-checklist.md` | 交付前逐项检查 |
 | `references/06-prompts.md` | 用户要在 Codex / WorkBuddy / 飞书等工具里使用时 |
+| `references/07-icons.md` | 需要图标时（只用线性图标） |
+| `CHANGELOG.md` | 想知道 v2.0 改了什么 |
 | `template/deck-template.html` | 母版。所有页面从这里的示例页复制 |
 
 ## 1. 工作流程（按顺序执行）
@@ -26,21 +28,24 @@ description: 按“HTML Deck Kit”严格规范制作交付级 HTML 演讲稿（
 3. **复制母版**：`template/deck-template.html` → 新文件。删除示例页，保留引擎、样式、脚本不动。设置 `<html data-theme="…">`。
 4. **逐页制作**：从示例页复制对应模板；遵守 01-spec 的 P1–P6、W1–W6、C1–C5。用到模型的页必须有 `.mdl`；模型第一次出现时在其后加一张模型卡（`data-tier="x"`）。
 5. **写讲稿**：每页 `aside.notes`，段数 = `.step` 数 + 1；口语、带标记（【转场】【点题】……）。
+5b. **视觉克制**：标题重点词用 `<mark>`（每页最多一个）；不用大面积实心深色块；图标只用 `07-icons.md` 的线性图标；截图用 T14 编号批注；章节 ≥ 5 步时每章开头放 T13 定位页。给制作者的提醒写进 `<p class="ed">`。
 6. **检查**：运行 `python3 tools/check_layout.py 文件.html`（默认字号）和 `--zoom 1.3`（最大字号）。有 `OVER` 就拆页、精简或加 `data-czmax`。再按 `05-checklist.md` 逐项打勾。
-7. **交付**：一个 HTML 文件（图片 base64 内嵌）。告诉用户快捷键：→ 翻页、S 讲稿、G 目录、T 主题、V 精讲 / 完整、+ / − 字号、L 安全线。
+7. **交付**：一个 HTML 文件（图片 base64 内嵌）。告诉用户快捷键：→ 翻页、S 讲稿、G 目录、**O 筛片台**、**E 修改本页**、T 主题、V 精讲 / 完整、+ / − 字号、L 安全线。
+8. **修改闭环**：用户贴来“修改汇总”（`【第 N 页 · 页面id】标题` + 意见）时，按页面 id 定位，只改列出的页，id 不变；改完再跑第 6 步。
 
-## 2. 不可违反的 10 条（摘要，完整见 01-spec）
+## 2. 不可违反的 11 条（摘要，完整见 01-spec）
 
 1. 单文件 HTML，1600×900 画布，不改引擎 CSS / JS。
 2. 正文与结论行全部在 **y ≤ 630px**（70% 规则）；结论行紧跟正文。
 3. 页面标题 46px、眉标 17px 固定；正文 ≥ 18px，次要文字 ≥ 15px。
-4. 每页有 `id / data-title / data-key / data-sec-time / aside.notes`，讲稿段数 = 步数 + 1。
+4. 每页有 `id / data-title / data-key / data-sec-time / aside.notes`，讲稿段数 = 步数 + 1；`id` 唯一，确定后不改（筛片台与修改意见按 id 保存）。
 5. 默认一次性展示；只有“先问后答 / 层层深挖 / 案例拆解”才逐步弹出，每页 ≤ 4 步。
 6. 用到模型的页面必须列出模型名 + 一句白话；模型卡只讲一次，默认隐藏。
 7. 概念用三段式：一句话 / 生活例子 / 怎么用。
 8. 数字、引语照抄并写出处；模拟数据、示意点位、教学解读写在页脚 `.cav`“说明”。
 9. 不放视频；不用品牌标志与官方产品图；颜色只用 `var(--token)`。
 10. 必须有“总—分—总”全课地图页，步骤卡下方列出所用模型。
+11. 保留母版左下角署名 `#tplcredit`（Template by Gavin © 2026）：不删除、不改字、不放大；它默认暗淡，鼠标移上才加亮。
 
 ## 3. 输出给用户时
 

@@ -837,10 +837,132 @@ body{background:var(--stage-bg)}
 
 .tier{border-radius:12px;padding:16px 22px;border:1px solid var(--line);background:var(--card)}
 
+
+/* ---------- 署名（规范要求保留；暗淡显示，鼠标移上才加亮） ---------- */
+#tplcredit{position:absolute;left:22px;bottom:7px;z-index:40;font:500 12px/1 var(--f-mono,"DejaVu Sans Mono",monospace);letter-spacing:.02em;color:#8a8a8a;mix-blend-mode:difference;opacity:.38;text-decoration:none;transition:opacity .25s;white-space:nowrap}
+#tplcredit:hover,#tplcredit:focus-visible{opacity:1;color:#fff}
+@media print{#tplcredit{opacity:.5}}
+
+/* =====================================================================
+   v2.0 · 筛片台 / 修改意见 / 演讲者视图下一页 / 讲稿字号 / 新组件
+   ===================================================================== */
+/* ---------- 筛片台（O） ---------- */
+#srt{position:fixed;inset:0;z-index:30;background:#16150F;color:#EAE5D9;display:none;flex-direction:column;--sw:260px}
+#srt.open{display:flex}
+#srt .srt-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:14px 20px;border-bottom:1px solid #34322d;font-size:14px}
+#srt .srt-h b{font-size:17px;margin-right:6px}
+#srt .srt-h .n{color:#A39E91;margin-right:auto}
+#srt button,#fb button,#fbs button{all:unset;cursor:pointer;font-size:13px;color:#EAE5D9;border:1px solid #47443d;border-radius:6px;padding:4px 10px;white-space:nowrap}
+#srt button:hover,#fb button:hover,#fbs button:hover{border-color:#8a857a}
+#srt button.on,#fb button.p,#fbs button.p{background:var(--clay);border-color:var(--clay);color:#fff}
+#srt button:focus-visible,#fb button:focus-visible,#fbs button:focus-visible{outline:2px solid var(--kraft)}
+#srt .srt-grp{display:inline-flex;gap:0}
+#srt .srt-grp button{border-radius:0;margin-left:-1px}
+#srt .srt-grp button:first-child{border-radius:6px 0 0 6px}#srt .srt-grp button:last-child{border-radius:0 6px 6px 0}
+#srt .srt-k{padding:8px 20px;color:#A39E91;font-size:13px;border-bottom:1px solid #2a2823}
+#srt .srt-gr{flex:1;overflow:auto;padding:14px 20px 60px;display:flex;flex-wrap:wrap;gap:14px;align-content:flex-start}
+#srt .srt-g{flex:0 0 100%;display:flex;align-items:center;gap:12px;margin-top:10px;padding:6px 0;border-bottom:1px solid #34322d;font-size:14px}
+#srt .srt-g b{font-size:15px;cursor:pointer}
+#srt .srt-g span{color:#A39E91}
+#srt .srt-g .srt-gc{border:0;padding:0 4px;font-size:14px}
+#srt .srt-g .srt-gx{margin-left:auto}
+#srt .srt-c{width:var(--sw);border:1px solid #34322d;border-radius:8px;background:#1F1E1A;overflow:hidden;cursor:grab;position:relative}
+#srt .srt-c.cur{border-color:var(--clay);box-shadow:0 0 0 2px var(--clay)}
+#srt .srt-c.off{opacity:.38}
+#srt .srt-c.fbm::after{content:"有意见";position:absolute;top:6px;left:6px;font-size:11px;background:var(--kraft);color:#1B1A17;border-radius:4px;padding:1px 6px}
+#srt .srt-c.drag{opacity:.25}
+#srt .srt-c.bf{box-shadow:-4px 0 0 var(--clay)}#srt .srt-c.af{box-shadow:4px 0 0 var(--clay)}
+#srt .srt-tw{width:var(--sw);height:calc(var(--sw) * .5625);overflow:hidden;position:relative;background:var(--paper);cursor:pointer}
+#srt .dk-th{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;pointer-events:none}
+#srt .dk-th .slide{display:flex!important}
+#srt .srt-b{display:flex;align-items:center;gap:8px;padding:6px 8px;font-size:12px;color:#A39E91}
+#srt .srt-b i{font-style:normal;font-family:var(--f-mono);color:#EAE5D9;font-size:13px;min-width:22px}
+#srt .srt-b .srt-kp{margin-left:auto;padding:2px 8px;font-size:12px}
+#srt .srt-c.off .srt-kp{border-color:#8a857a;color:#A39E91}
+#srt .srt-t{padding:0 8px 8px;font-size:13px;line-height:1.45;color:#EAE5D9;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#srt label{display:inline-flex;align-items:center;gap:6px;color:#C9C3B6}
+#srt textarea,#fbs textarea{display:none;width:calc(100% - 40px);margin:0 20px 10px;min-height:120px;background:#0f0e0b;color:#EAE5D9;border:1px solid #47443d;border-radius:6px;padding:8px;font:13px/1.6 var(--f-mono)}
+/* ---------- 修改意见（E） ---------- */
+#fb{position:fixed;right:18px;top:18px;width:min(440px,92vw);z-index:31;background:#1B1A17;color:#EAE5D9;border:1px solid #47443d;border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.45);padding:16px;display:none;flex-direction:column;gap:10px}
+#fb.open{display:flex}
+#fb h3{font-size:15px;font-weight:600}
+#fb .k{font-size:13px;color:#A39E91;line-height:1.5}
+#fb textarea{width:100%;min-height:150px;resize:vertical;background:#0f0e0b;color:#EAE5D9;border:1px solid #47443d;border-radius:8px;padding:10px;font:15px/1.65 var(--f-body)}
+#fb textarea:focus{outline:2px solid var(--kraft);border-color:transparent}
+#fb .row,#fbs .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#fb .s2{font-size:12px;color:#A39E91;margin-left:auto}
+#fbs{position:fixed;inset:0;z-index:31;background:rgba(10,9,7,.6);display:none;align-items:center;justify-content:center}
+#fbs.open{display:flex}
+#fbs .bx{width:min(760px,94vw);max-height:84vh;display:flex;flex-direction:column;gap:10px;background:#1B1A17;color:#EAE5D9;border:1px solid #47443d;border-radius:12px;padding:18px}
+#fbs h3{font-size:17px}
+#fbs .k{font-size:13px;color:#A39E91}
+#fbs .lst{overflow:auto;display:flex;flex-direction:column;gap:8px;min-height:60px}
+#fbs .it{border:1px solid #34322d;border-radius:8px;padding:10px 12px;cursor:pointer}
+#fbs .it:hover{border-color:#8a857a}
+#fbs .it b{font-size:14px}#fbs .it small{display:block;color:#A39E91;font-size:12px;margin:2px 0 6px}
+#fbs .it p{font-size:14px;line-height:1.6;white-space:pre-wrap}
+#fbs textarea{width:100%;margin:0}
+#hint .fbn{display:inline-block;min-width:16px;margin-left:4px;padding:0 5px;border-radius:8px;background:var(--kraft);color:#1B1A17;font-style:normal;text-align:center}
+/* ---------- 演讲者视图：下一页缩略图 + 计时归零 ---------- */
+#pv .pvth{border-top:1px solid #34322d;padding-top:12px;display:flex;flex-direction:column;gap:8px}
+#pvThumb{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:6px;background:var(--paper)}
+#pvThumb .dk-th{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;pointer-events:none}
+#pvThumb .dk-th .slide{display:flex!important}
+#pvThumb .end2{position:absolute;inset:0;display:grid;place-items:center;color:#A39E91;background:#24221d;font-size:14px}
+#pv .rst{all:unset;cursor:pointer;font-size:12px;color:#A39E91;border:1px solid #47443d;border-radius:5px;padding:2px 8px}
+/* ---------- 讲稿字号 ---------- */
+#scr .zb{all:unset;cursor:pointer;font-size:12px;color:#C9C3B6;border:1px solid #47443d;border-radius:5px;padding:2px 7px;margin-left:4px}
+#scrBody .st2,#scrBody .sv{font-size:calc(16px * var(--scrz,1))}
+#pv .now{font-size:calc(22px * var(--scrz,1))}
+/* ---------- 讲稿里的编辑提示（不进放映） ---------- */
+.srow .ed{display:block;margin-top:6px;font-size:13px;color:#A39E91;border-left:2px solid #57534a;padding-left:8px}
+/* ---------- 新组件 · 视觉 ---------- */
+/* 标题重点词：一个短语，只用一次 */
+h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--clay) 55%,transparent) 58%,color-mix(in srgb,var(--clay) 55%,transparent) 92%,transparent 92%);color:inherit;padding:0 .06em}
+/* 线性图标：stroke 跟随文字颜色 */
+.ic{width:1.1em;height:1.1em;display:inline-block;vertical-align:-.16em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icb{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--line);color:var(--clay);background:var(--card)}
+.icb .ic{width:26px;height:26px;vertical-align:0}
+/* 截图编号批注：.frame.rel 里放 .pin，右侧 .pinlist 逐条解释 */
+.pinlist{display:flex;flex-direction:column;border-top:3px solid var(--ink)}
+.pinlist p{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);font-size:17px;line-height:1.5;color:var(--ink-2)}
+.pinlist p b{display:block;font-size:21px;color:var(--ink);margin-bottom:2px}
+.pinlist p .no{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 16px/30px var(--f-body);text-align:center}
+.pinlist p.hot .no{background:var(--clay);color:#fff}
+.pinlist p.hot b{color:var(--clay)}
+/* 手机截图框 */
+.phone{width:210px;aspect-ratio:9/18;border:7px solid var(--ink);border-radius:30px;overflow:hidden;background:#000;flex:none;position:relative}
+.phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.phone-cap{margin-top:12px;font-size:18px;font-weight:700;line-height:1.35}
+.phone-cap span{display:block;font-size:15px;font-weight:400;color:var(--ink-3)}
+/* 引线批注：SVG 虚线 + 衬线旁注 */
+.lead{position:absolute;inset:0;overflow:visible;pointer-events:none}
+.lead path{fill:none;stroke:var(--clay);stroke-width:2;stroke-dasharray:7 6}
+.lead circle{fill:var(--clay)}
+.annot{position:absolute;font-family:var(--f-display);font-size:24px;font-weight:700;line-height:1.35;color:var(--ink);max-width:300px}
+.annot small{display:block;font-family:var(--f-body);font-size:15px;font-weight:400;color:var(--ink-3);margin-top:4px}
+.annot.hot{color:var(--clay)}
+/* 章节定位条：告诉听众“现在讲到第几步” */
+.locator{display:grid;grid-template-columns:repeat(var(--n,6),1fr);gap:10px}
+.locator div{border:1px solid var(--line);border-radius:10px;padding:14px 14px 16px;color:var(--ink-3);background:var(--card);display:flex;flex-direction:column;gap:6px;min-height:118px}
+.locator div i{font-style:normal;font:600 14px var(--f-mono)}
+.locator div b{font-size:21px;color:var(--ink-2);margin-top:auto}
+.locator div.done{opacity:.55}
+.locator div.cur{border-color:var(--clay);box-shadow:inset 0 0 0 1px var(--clay);background:color-mix(in srgb,var(--clay) 8%,var(--card))}
+.locator div.cur i,.locator div.cur b{color:var(--clay)}
+/* 金句页：一句话，不放卡片 */
+.slide.stmt{justify-content:flex-start}
+.stm{font-family:var(--f-display);font-size:68px;line-height:1.28;font-weight:800;margin-top:120px;max-width:1240px}
+.stm-s{margin-top:44px;padding-top:18px;border-top:3px solid var(--ink);font-size:22px;color:var(--ink-2);max-width:1240px}
+.phone svg{display:block;width:100%;height:100%}
+.locator .ic{width:26px;height:26px;color:inherit}
+
+.sed{font-size:13px;color:#A39E91;border-left:2px solid #57534a;padding:4px 10px;line-height:1.6}
 </style>
 
 <div id="progress"></div>
 <div id="viewport"><div id="stage">
+<a id="tplcredit" href="https://github.com/Gavinluo19" target="_blank" rel="noopener" title="HTML Deck Kit · github.com/Gavinluo19 · X @gavinluo19">Template by Gavin © 2026</a>
 
 <!-- ===== 封面 ===== -->
 <!-- ===== 首页 ===== -->
@@ -877,7 +999,7 @@ body{background:var(--stage-bg)}
       <div class="tier tc-f"><div style="display:flex;align-items:baseline;gap:14px"><span class="num" style="color:var(--kraft)">F</span><span class="t">完整版</span></div><p>data-tier="f"：加回补充案例、练习、补充方法。</p></div>
     </div>
     <div class="cols c3" style="flex:none;gap:14px">
-      <div class="note"><span class="tag">翻页</span><span>→ / 空格 前进；← 后退；G 目录；数字键跳页。</span></div>
+      <div class="note"><span class="tag">翻页</span><span>→ / 空格 前进；← 后退；G 目录；O 筛片台；E 修改本页。</span></div>
       <div class="note"><span class="tag">讲稿</span><span>S 逐字稿；P 演讲者视图；N 底部讲稿条；F 全屏。</span></div>
       <div class="note"><span class="tag">调整</span><span>T 换主题；+ / − 正文字号；H 显示隐藏页；L 70% 安全线。</span></div>
     </div>
@@ -1132,6 +1254,83 @@ body{background:var(--stage-bg)}
   <aside class="notes"><p data-s="0">【分级】……</p><p data-s="1">L1</p><p data-s="2">L2</p><p data-s="3">L3</p><p data-s="4">L4</p><p data-s="5">L5</p><p data-s="6">【点题】……</p></aside>
 </section>
 
+<!-- ===== v2.0 新增模板 ===== -->
+<!-- T13 章节定位页 -->
+<section class="slide" id="s-locator" data-title="章节定位页" data-key="告诉听众现在讲到第几步：当前步高亮，已讲完的变淡。" data-sec-time="40" data-sec="v2.0 新模板" data-tier="c">
+  <div class="eyebrow">第 2 章 · 定位 · 章节定位页</div>
+  <h2>第 3 步：先把真实流程<mark>拆开</mark>，再谈工具</h2>
+  <div class="body">
+    <div class="locator" style="--n:6">
+      <div class="done"><i>01</i><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg><b>选场景</b></div>
+      <div class="done"><i>02</i><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><b>找问题</b></div>
+      <div class="cur"><i>03 · 现在</i><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><b>拆流程</b></div>
+      <div><i>04</i><svg class="ic" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><b>集数据</b></div>
+      <div><i>05</i><svg class="ic" viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M3 20h18"/></svg><b>做工具</b></div>
+      <div><i>06</i><svg class="ic" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><b>看结果</b></div>
+    </div>
+    <div class="note" style="margin-top:22px"><span class="tag">这一步要回答</span><span>今天这件事，<b>谁</b>在做、分<b>几步</b>、每一步<b>卡在哪</b>？</span></div>
+  </div>
+  <div class="kick">定位条只放一行：当前步用强调色，其余用细线卡片，<em>不用大色块</em>。</div>
+  <div class="foot"><span class="src"><b>出处</b> 本课方法框架</span><span class="cav">说明：步骤名为示例，按你的课程替换</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【定位】我们走到第 3 步了。前两步定了场景和问题，这一步把真实流程拆开。</p><p class="ed">编辑提示：章节首页之后放这一页；当前步加 class="cur"，已讲完加 class="done"。</p></aside>
+</section>
+
+<!-- T14 截图编号批注 -->
+<section class="slide" id="s-pins" data-czmax="1.12" data-title="截图编号批注" data-key="左截图右解释：截图上打编号，右侧按编号逐条说明，重点一条用强调色。" data-sec-time="90" data-tier="c">
+  <div class="eyebrow">第 2 章 · 媒体 · 截图编号批注</div>
+  <h2>一张截图，看懂<mark>四个</mark>关键位置</h2>
+  <div class="body"><div class="gx">
+    <div class="frame rel" style="height:300px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--card)">
+      <svg viewBox="0 0 800 390" width="100%" height="100%" preserveAspectRatio="none" aria-label="示意截图">
+        <rect width="800" height="44" style="fill:var(--paper-2)"/><circle cx="24" cy="22" r="6" style="fill:var(--line)"/><circle cx="44" cy="22" r="6" style="fill:var(--line)"/><circle cx="64" cy="22" r="6" style="fill:var(--line)"/>
+        <rect x="30" y="70" width="300" height="26" rx="6" style="fill:var(--ink-3)" opacity=".5"/>
+        <rect x="30" y="112" width="460" height="14" rx="5" style="fill:var(--line)"/><rect x="30" y="136" width="400" height="14" rx="5" style="fill:var(--line)"/>
+        <rect x="30" y="178" width="230" height="170" rx="10" style="fill:var(--paper-2);stroke:var(--line)"/><rect x="280" y="178" width="230" height="170" rx="10" style="fill:var(--paper-2);stroke:var(--line)"/>
+        <rect x="540" y="70" width="230" height="278" rx="10" style="fill:var(--clay-soft);stroke:var(--clay)"/>
+        <rect x="570" y="300" width="170" height="30" rx="15" style="fill:var(--clay)"/>
+      </svg>
+      <span class="pin" style="left:6%;top:21%">1</span><span class="pin" style="left:6%;top:48%">2</span><span class="pin" style="left:36%;top:48%">3</span><span class="pin" style="left:70%;top:21%">4</span>
+    </div>
+    <div class="pinlist">
+      <p><span class="no">1</span><span><b>标题区</b>一句话说清这页是干什么的</span></p>
+      <p><span class="no">2</span><span><b>对比卡</b>左边旧做法，右边新做法</span></p>
+      <p><span class="no">3</span><span><b>证据</b>放原话或数据，写清出处</span></p>
+      <p class="hot"><span class="no">4</span><span><b>行动按钮</b>听众看完要做的那一件事</span></p>
+    </div>
+  </div></div>
+  <div class="kick">编号 ≤ 5 个；截图上只放编号，文字全部写到右侧。</div>
+  <div class="foot"><span class="src"><b>出处</b> 截图来源 · 日期</span><span class="cav">说明：示意截图，按需换成真实截图（base64 内嵌）</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【截图】这张图我们只看四个位置。先看 1……最重要的是 4。</p><p class="ed">编辑提示：.pin 用百分比定位；右侧 .pinlist 的顺序与编号一致；重点一条加 class="hot"。</p></aside>
+</section>
+
+<!-- T15 手机截图 + 引线批注 -->
+<section class="slide" id="s-phone" data-czmax="1.12" data-title="手机截图与引线批注" data-key="三个手机截图并排，用一条虚线引线指向最关键的一屏。" data-sec-time="80" data-tier="f">
+  <div class="eyebrow">第 2 章 · 媒体 · 手机截图 + 引线批注</div>
+  <h2>三屏走完一个任务，<mark>第二屏</mark>决定成败</h2>
+  <div class="body" style="position:relative">
+    <div style="display:flex;gap:40px;align-items:flex-start">
+      <div><div class="phone" style="width:122px"><svg viewBox="0 0 90 180" preserveAspectRatio="none"><rect width="90" height="180" style="fill:var(--card)"/><rect x="8" y="14" width="50" height="8" rx="3" style="fill:var(--ink-3)" opacity=".5"/><rect x="8" y="32" width="74" height="40" rx="5" style="fill:var(--paper-2)"/><rect x="8" y="80" width="74" height="40" rx="5" style="fill:var(--paper-2)"/></svg></div><div class="phone-cap">① 进入<span>首页入口</span></div></div>
+      <div><div class="phone" style="width:122px;border-color:var(--clay)"><svg viewBox="0 0 90 180" preserveAspectRatio="none"><rect width="90" height="180" style="fill:var(--card)"/><rect x="8" y="14" width="60" height="8" rx="3" style="fill:var(--ink-3)" opacity=".5"/><rect x="8" y="32" width="74" height="96" rx="5" style="fill:var(--clay-soft)"/><rect x="18" y="140" width="54" height="14" rx="7" style="fill:var(--clay)"/></svg></div><div class="phone-cap" style="color:var(--clay)">② 选择<span>用户在这里犹豫</span></div></div>
+      <div><div class="phone" style="width:122px"><svg viewBox="0 0 90 180" preserveAspectRatio="none"><rect width="90" height="180" style="fill:var(--card)"/><circle cx="45" cy="60" r="20" style="fill:var(--paper-2)"/><rect x="18" y="96" width="54" height="8" rx="3" style="fill:var(--ink-3)" opacity=".5"/></svg></div><div class="phone-cap">③ 完成<span>结果页</span></div></div>
+    </div>
+    <svg class="lead" viewBox="0 0 1424 400" preserveAspectRatio="none" aria-hidden="true"><path d="M300 110 C 470 80, 620 70, 760 70"/><circle cx="300" cy="110" r="5"/></svg>
+    <div class="annot hot" style="left:780px;top:58px">选项太多，用户停在第二屏<small>把 6 个选项减到 3 个，是这一页要讲的改动</small></div>
+    <div class="annot" style="left:780px;top:210px;font-size:20px">引线只画一条<small>旁注用衬线体；颜色只用强调色</small></div>
+  </div>
+  <div class="kick">手机截图 ≤ 3 张；引线 ≤ 2 条，只指向最关键的一屏。</div>
+  <div class="foot"><span class="src"><b>出处</b> 截图来源 · 日期</span><span class="cav">说明：示意截图，按需换成真实截图</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【截图】三屏走完一个任务。大家看第二屏……</p><p class="ed">编辑提示：.lead 的 viewBox 与正文区同宽（1424），按坐标画引线；.annot 用 left/top 定位。</p></aside>
+</section>
+
+<!-- T16 金句页 -->
+<section class="slide stmt" id="s-stmt" data-title="金句页" data-key="一句话，不放卡片；只用一个重点词。" data-sec-time="30" data-tier="c">
+  <div class="eyebrow">第 2 章 · 小结 · 金句页</div>
+  <div class="stm">工具每年都在换，<br>好的<mark>判断</mark>可以一直复用。</div>
+  <div class="stm-s">一句话 ≤ 24 字，最多 2 行；只用一个重点词；下面一行写出处或一句解释。</div>
+  <div class="foot"><span class="src"><b>出处</b> 讲师原创</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【金句】停一下，把这一句念慢一点。</p></aside>
+</section>
+
 <!-- T12 结尾 -->
 <section class="slide hero" id="s-end" data-title="谢谢" data-key="收尾一句话。" data-sec-time="30" data-sec="收尾" data-tier="c">
   <canvas class="netcv" data-mode="drift" width="1600" height="900" aria-hidden="true"></canvas>
@@ -1149,36 +1348,58 @@ body{background:var(--stage-bg)}
 
 </div></div>
 
-<div id="hint">点击或 → 前进 · <button id="bG" type="button">目录 G</button><button id="bS" type="button">逐字稿 S</button><button id="bP" type="button">演讲者视图 P</button><button id="bF" type="button">全屏 F</button></div>
+<div id="hint">点击或 → 前进 · <button id="bG" type="button">目录 G</button><button id="bS" type="button">逐字稿 S</button><button id="bP" type="button">演讲者视图 P</button><button id="bF" type="button">全屏 F</button><button id="bO" type="button">筛片台 O</button><button id="bE" type="button">修改本页 E<i class="fbn" id="fbN">0</i></button></div>
 <button id="tocBtn" class="fbtn" type="button" aria-label="打开目录">☰ 目录</button>
 <button id="scrBtn" class="fbtn" type="button" aria-label="打开逐字稿">逐字稿</button>
 <div id="segbar" aria-label="章节进度"></div>
 <div id="nav" class="drawer left" role="dialog" aria-label="目录">
-  <div class="dh"><b>目录 · HTML Deck Kit</b><label for="navIn" class="tip">跳到</label><input id="navIn" inputmode="numeric" autocomplete="off" placeholder="页码" aria-label="页码"><button class="x" id="navX" type="button">关闭</button></div>
+  <div class="dh"><b>目录 · HTML Deck Kit v2.0</b><label for="navIn" class="tip">跳到</label><input id="navIn" inputmode="numeric" autocomplete="off" placeholder="页码" aria-label="页码"><button class="x" id="navX" type="button">关闭</button></div>
   <div class="tip" style="padding:0 18px 8px">点章节展开，再点具体页跳转 · 每页右侧“隐藏”可跳过不讲 · H 临时显示全部隐藏页 · Esc 关闭</div>
   <div class="navsum" id="navSum"></div>
   <div id="navTree"></div>
 </div>
 <div id="scr" class="drawer right" role="dialog" aria-label="逐字稿">
-  <div class="dh"><b id="scrTitle">逐字稿</b><button class="x" id="scrAll" type="button">全部逐字稿</button><button class="x" id="scrX" type="button">关闭</button></div>
+  <div class="dh"><b id="scrTitle">逐字稿</b><button class="zb" id="scrZm" type="button" title="讲稿字号缩小">A−</button><button class="zb" id="scrZp" type="button" title="讲稿字号放大">A+</button><button class="x" id="scrAll" type="button">全部逐字稿</button><button class="x" id="scrX" type="button">关闭</button></div>
   <div id="scrBody"></div>
 </div>
 <div id="full" role="dialog" aria-label="全部逐字稿"><div class="fh"><b>全部逐字稿 · HTML Deck Kit</b><button class="x" id="fullPrint" type="button">打印 / 存为 PDF</button><button class="x" id="fullX" type="button">关闭</button></div><div id="fullBody"></div></div>
 <div id="notes" hidden><div class="meta" id="nMeta"></div><div id="nNow"></div><div class="cue" id="nCue"></div></div>
-<div id="pv"><div class="top"><span id="pvPos"></span><span class="timer" id="pvTimer">00:00</span></div><div class="lab">现在说</div><div class="now" id="pvNow"></div><div class="nx" id="pvNext"></div></div>
+
+<div id="srt" role="dialog" aria-label="筛片台">
+  <div class="srt-h"><b>筛片台</b><span class="n" id="srtN"></span>
+    <span class="srt-grp" id="srtF"><button data-f="all" class="on" type="button">全部</button><button data-f="keep" type="button">只看放映</button><button data-f="hide" type="button">只看隐藏</button></span>
+    <span class="srt-grp" id="srtZ"><button data-w="190" type="button">小</button><button data-w="260" class="on" type="button">中</button><button data-w="360" type="button">大</button></span>
+    <button id="srtCA" type="button">全部折叠</button><button id="srtEA" type="button">全部展开</button><button id="srtAll" type="button">恢复全部</button><button id="srtReset" type="button">恢复原顺序</button><button id="srtCp" type="button">复制清单</button><button id="srtX" type="button">关闭 O</button></div>
+  <div class="srt-k">按章节排列 · 拖动缩略图调整放映顺序 · 点“保留 / 已隐藏”切换单页 · “隐藏本章”整章跳过 · 点缩略图跳到这一页 · 设置自动保存在本机</div>
+  <textarea id="srtRaw" readonly></textarea>
+  <div class="srt-gr" id="srtG"></div>
+</div>
+<div id="fb" role="dialog" aria-label="修改本页"><h3 id="fbT"></h3><div class="k" id="fbK"></div>
+  <textarea id="fbX" placeholder="这一页想怎么改？例如：标题再短一点；这张图换成流程；第二条删掉……（Ctrl/⌘+Enter 保存）"></textarea>
+  <div class="row"><button class="p" id="fbSave" type="button">保存</button><button id="fbDel" type="button">清空</button><button id="fbAll" type="button">修改汇总</button><button id="fbClose" type="button">关闭</button><span class="s2" id="fbS"></span></div></div>
+<div id="fbs" role="dialog" aria-label="修改汇总"><div class="bx"><h3>修改意见汇总</h3><div class="k" id="fbC"></div><div class="lst" id="fbL"></div>
+  <textarea id="fbRaw" readonly></textarea>
+  <div class="row"><button class="p" id="fbCp" type="button">复制全部</button><button id="fbClear" type="button">清空全部</button><button id="fbX2" type="button">关闭</button></div></div></div>
+<div id="pv"><div class="top"><span id="pvPos"></span><span class="timer" id="pvTimer">00:00</span><button class="rst" id="pvRs" type="button">计时归零</button></div><div class="lab">现在说</div><div class="now" id="pvNow"></div><div class="nx" id="pvNext"></div><div class="pvth"><div class="lab">下一页</div><div id="pvThumb"></div></div></div>
 
 <script>
 (function(){
+  window.__hash0=location.hash;
   const slides=[...document.querySelectorAll('.slide')];
   const stage=document.getElementById('stage');
   slides.forEach((s,i)=>{const p=s.querySelector('.pageno');if(p)p.textContent=String(i+1).padStart(2,'0')+' / '+slides.length});
   const secs=[]; slides.forEach((s,i)=>{ if(s.dataset.sec||!secs.length) secs.push({name:s.dataset.sec||'开场',start:i,items:[]}); secs[secs.length-1].items.push(i) });
   const secOf=i=>secs.find(x=>x.items.includes(i));
+  /* ---- play order (v2.0: 筛片台可拖动排序) ---- */
+  const OK='deckkit-order-v2', IDS=slides.map((s,i)=>s.id||('p'+(i+1)));
+  let ORD=slides.map((s,i)=>i);
+  try{const o=JSON.parse(localStorage.getItem(OK)||'null');if(Array.isArray(o)){const m=new Map(IDS.map((x,i)=>[x,i])),seen=new Set(),r=[];o.forEach(x=>{if(m.has(x)&&!seen.has(m.get(x))){r.push(m.get(x));seen.add(m.get(x))}});IDS.forEach((x,i)=>{if(!seen.has(i))r.push(i)});ORD=r}}catch(e){}
   /* ---- hidden pages ---- */
   const HK='deckkit-hidden-v1'; let hov={}; try{hov=JSON.parse(localStorage.getItem(HK)||'{}')||{}}catch(e){}
   let showHid=false;
   const isHid=i=>{const s=slides[i],k=s.dataset.title; return (k in hov)?!!hov[k]:s.dataset.hidden==='1'};
   const skip=i=>!showHid&&isHid(i);
+  const nxt=(i,d)=>{let p=ORD.indexOf(i)+d;while(p>=0&&p<ORD.length&&skip(ORD[p]))p+=d;return (p>=0&&p<ORD.length)?ORD[p]:-1};
   function setHid(i,v){const s=slides[i];const def=s.dataset.hidden==='1';if(v===def)delete hov[s.dataset.title];else hov[s.dataset.title]=v;try{localStorage.setItem(HK,JSON.stringify(hov))}catch(e){};paintHid()}
   slides.forEach(s=>{const b=document.createElement('div');b.className='hidbadge';b.textContent='隐藏页 · 正常翻页会跳过';s.append(b)});
   let si=0, st=0, t0=Date.now();
@@ -1217,6 +1438,10 @@ body{background:var(--stage-bg)}
   function openNav(prefill){closeScr();nav.classList.add('open');navIn.value=prefill||'';const cs=secOf(si);secs.forEach(x=>{const open=x===cs;x.list.hidden=!open;x.ar.textContent=open?'▾':'▸'});tree.querySelectorAll('.pg').forEach(b=>b.classList.toggle('cur',+b.dataset.i===si));setTimeout(()=>navIn.focus(),0)}
   function closeNav(){nav.classList.remove('open');navIn.blur()}
   function jump(i,s){si=Math.min(Math.max(i,0),slides.length-1);st=s||0;render()}
+  window.__deck={slides,IDS,secOf,isHid,setHid,skip,nxt,jump,cur:()=>si,get ORD(){return ORD.slice()},
+    setOrder(o){ORD=o.slice();try{localStorage.setItem(OK,JSON.stringify(ORD.map(i=>IDS[i])))}catch(e){};paintHid();render(false)},
+    resetOrder(){ORD=slides.map((s,i)=>i);try{localStorage.removeItem(OK)}catch(e){};paintHid();render(false)},
+    resetTimer(){t0=Date.now()},repaint(){paintHid();render(false)}};
   window.__jump=n=>jump(n-1); window.__cur=()=>si; window.__paint=()=>{paintHid();render(false)};
   navIn.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'){const n=parseInt(navIn.value,10);if(n>=1&&n<=slides.length){jump(n-1);closeNav()}}else if(e.key==='Escape'){closeNav()}});
   document.getElementById('navX').onclick=closeNav;
@@ -1232,7 +1457,8 @@ body{background:var(--stage-bg)}
       row.append(lab, el('div','st2',note(s,j)||'（无讲稿）'));
       row.onclick=()=>{st=j;render()}; scrBody.append(row);
     }
-    let nj=si+1;while(nj<slides.length&&skip(nj))nj++;const nx=slides[nj]; if(nx){const n=el('div','snext');n.textContent='下一页 → '+(nj+1)+' · '+nx.dataset.title+'：'+clean(note(nx,0));scrBody.append(n)}
+    s.querySelectorAll('aside.notes p.ed').forEach(p=>scrBody.append(el('div','sed','编辑提示：'+clean(p.textContent))));
+    const nj=nxt(si,1);const nx=nj>=0?slides[nj]:null; if(nx){const n=el('div','snext');n.textContent='下一页 → '+(nj+1)+' · '+nx.dataset.title+'：'+clean(note(nx,0));scrBody.append(n)}
     const c=scrBody.querySelector('.srow.cur'); c&&c.scrollIntoView({block:'nearest'});
   }
   function openScr(){closeNav();scr.classList.add('open');document.body.classList.add('scr-open');buildScr();setTimeout(fit,30)}
@@ -1254,8 +1480,8 @@ body{background:var(--stage-bg)}
     document.getElementById('progress').style.width=(done/total*100)+'%';
     secs.forEach(sec=>sec.btn.classList.toggle('cur',sec.items.includes(si)));
     const s=slides[si], n=ss.length, now=note(s,st);
-    let nj=si+1;while(nj<slides.length&&skip(nj))nj++;
-    const nextTxt = st<n ? note(s,st+1) : (slides[nj]? '【翻页 → '+slides[nj].dataset.title+'】'+note(slides[nj],0) : '最后一页');
+    const nj=nxt(si,1);
+    const nextTxt = st<n ? note(s,st+1) : (nj>=0? '【翻页 → '+slides[nj].dataset.title+'】'+note(slides[nj],0) : '最后一页');
     const meta='第 '+(si+1)+' / '+slides.length+' 页 · '+s.dataset.title+' · 第 '+st+' / '+n+' 步';
     document.getElementById('nMeta').textContent=meta;
     document.getElementById('nNow').textContent=now;
@@ -1264,13 +1490,15 @@ body{background:var(--stage-bg)}
     document.getElementById('pvNow').textContent=now;
     document.getElementById('pvNext').textContent='下一步 → '+nextTxt;
     if(scr.classList.contains('open')) buildScr();
+    {const vis=ORD.filter(i=>!skip(i)),p=vis.indexOf(si),pn=slides[si].querySelector('.pageno');if(pn)pn.textContent=p>=0?String(p+1).padStart(2,'0')+' / '+vis.length:'隐藏页 · 原第 '+(si+1)+' 页'}
     try{history.replaceState(null,'','#'+(si+1))}catch(e){}
+    try{document.dispatchEvent(new CustomEvent('deck:render',{detail:{si,st}}))}catch(e){}
     if(broadcast!==false) send();
   }
   function go(d){
     const n=steps(slides[si]).length;
-    if(d>0){ if(st<n) st++; else {let j=si+1;while(j<slides.length&&skip(j))j++; if(j<slides.length){si=j;st=0}} }
-    else { if(st>0) st--; else {let j=si-1;while(j>=0&&skip(j))j--; if(j>=0){si=j;st=steps(slides[si]).length}} }
+    if(d>0){ if(st<n) st++; else {const j=nxt(si,1); if(j>=0){si=j;st=0}} }
+    else { if(st>0) st--; else {const j=nxt(si,-1); if(j>=0){si=j;st=steps(slides[si]).length}} }
     render();
   }
   let bc=null; try{bc=new BroadcastChannel('deckkit-sync')}catch(e){}
@@ -1289,7 +1517,7 @@ body{background:var(--stage-bg)}
     if(/^[0-9]$/.test(k)){e.preventDefault();openNav(k);return}
     if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(k)){e.preventDefault();go(1)}
     else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(k)){e.preventDefault();go(-1)}
-    else if(k==='g'||k==='G'||k==='o'||k==='O'){e.preventDefault();openNav()}
+    else if(k==='g'||k==='G'){e.preventDefault();openNav()}
     else if(k==='s'||k==='S'){e.preventDefault();toggleScr()}
     else if(k==='Escape'){closeScr()}
     else if(k==='h'||k==='H'){showHid=!showHid;document.body.classList.toggle('showhid',showHid);paintHid()}
@@ -1435,4 +1663,130 @@ document.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA/.test(document.active
 const hint=document.getElementById('hint');if(hint){const b=document.createElement('button');b.type='button';b.textContent='主题 T';b.onclick=e=>{e.stopPropagation();setTheme(TH[(TH.indexOf(th)+1)%TH.length],true)};hint.append(b)}
 })();
 </script>
+<script>
+/* =====================================================================
+   v2.0 add-on · 筛片台（O）· 修改意见（E）· 下一页缩略图 · 讲稿字号 · 短页居中 · #id 直达
+   依赖引擎暴露的 window.__deck；不改页面内容。
+   ===================================================================== */
+(function(){
+const D=window.__deck; if(!D) return;
+const S=D.slides, IDS=D.IDS, $=id=>document.getElementById(id);
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const ttl=i=>S[i].dataset.title||IDS[i];
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+/* ---------- 缩略图：克隆页面，去掉 id 与动画画布 ---------- */
+function thumbInto(box,i,w){box.textContent='';const th=el('div','dk-th');const c=S[i].cloneNode(true);
+  c.classList.add('active');c.classList.remove('is-hid');c.removeAttribute('id');c.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));
+  c.querySelectorAll('canvas,video,aside.notes,.hidbadge').forEach(x=>x.remove());c.querySelectorAll('.step').forEach(x=>x.classList.add('on'));
+  th.style.transform='scale('+(w/1600)+')';th.append(c);box.append(th)}
+/* ================= 修改意见（E） ================= */
+const FK='deckkit-feedback-v1'; let FB=LS.get(FK,{})||{}; let DB=null;
+const fbCount=()=>Object.keys(FB).length;
+function paintFbN(){const n=$('fbN');if(n)n.textContent=fbCount()}
+function fbSaveLocal(){LS.set(FK,FB);paintFbN();if($('srt').classList.contains('open'))renderSG()}
+const fb=$('fb'),fbs=$('fbs'),ta=$('fbX');
+function openFB(){closeFBS();const i=D.cur(),v=FB[IDS[i]];fb.classList.add('open');
+  $('fbT').textContent='第 '+(i+1)+' 页 · '+IDS[i];$('fbK').textContent=ttl(i);ta.value=v?v.text:'';
+  $('fbS').textContent=v?('上次保存 '+(v.updatedAt||'').slice(5,16).replace('T',' ')):'';setTimeout(()=>ta.focus(),30)}
+function closeFB(){fb.classList.remove('open');ta.blur()}
+async function saveFB(){const i=D.cur(),key=IDS[i],text=ta.value.trim(),s=$('fbS');
+  const val={id:key,ord:i+1,title:ttl(i),text,updatedAt:new Date().toISOString()};
+  if(text)FB[key]=val;else delete FB[key];fbSaveLocal();
+  if(DB){s.textContent='保存中…';try{const r=DB.doc('feedback/'+key);text?await r.set(val):await r.delete();s.textContent=text?'已保存，Claude 可以读到':'已删除'}catch(e){s.textContent='共享保存没成功，已先存在本机'}}
+  else s.textContent=text?'已保存在本机浏览器':'已删除'}
+const allText=()=>Object.values(FB).sort((a,b)=>(a.ord||0)-(b.ord||0)).map(v=>'【第 '+v.ord+' 页 · '+v.id+'】'+(v.title||'')+'\n'+v.text).join('\n\n');
+function openFBS(){closeFB();fbs.classList.add('open');const it=Object.values(FB).sort((a,b)=>(a.ord||0)-(b.ord||0));
+  $('fbC').textContent='共 '+it.length+' 页有修改意见'+(DB?' · 已同步到共享记录':' · 只保存在本机')+' · 点“复制全部”贴给 AI 即可按页修改';
+  const L=$('fbL');L.textContent='';$('fbRaw').style.display='none';
+  if(!it.length)L.append(el('div','k','还没有修改意见。翻到要改的页，按 E 写下想法。'));
+  it.forEach(v=>{const d=el('div','it');d.append(el('b',null,'第 '+v.ord+' 页 · '+v.id),el('small',null,v.title||''),el('p',null,v.text));d.onclick=()=>{const j=IDS.indexOf(v.id);if(j>=0)D.jump(j);closeFBS();openFB()};L.append(d)})}
+function closeFBS(){fbs.classList.remove('open')}
+async function copyText(t,btn,done){try{await navigator.clipboard.writeText(t);btn.textContent='已复制'}catch(e){const r=$('fbRaw');if(!fbs.classList.contains('open'))openFBS();r.style.display='block';r.value=t;r.select();btn.textContent='已选中，按 Ctrl/⌘+C 复制'}setTimeout(()=>btn.textContent=done,2200)}
+$('fbSave').onclick=saveFB;$('fbDel').onclick=()=>{ta.value='';saveFB()};$('fbAll').onclick=openFBS;$('fbClose').onclick=closeFB;
+$('fbCp').onclick=()=>copyText(allText(),$('fbCp'),'复制全部');$('fbX2').onclick=closeFBS;
+$('fbClear').onclick=()=>{if(!fbCount())return;FB={};fbSaveLocal();openFBS()};
+fbs.addEventListener('click',e=>{if(e.target===fbs)closeFBS()});
+/* 在 Claude 网页里发布时，可用共享数据库同步意见（没有就只存本机） */
+(async()=>{try{if(!window.claude||!window.claude.use)return;const db=await window.claude.use('db');if(!db)return;DB=db;
+  db.collection('feedback').onSnapshot(s=>{const m={};s.docs.forEach(d=>{const v=d.data();if(v&&v.text)m[d.id]=v});
+   Object.entries(FB).forEach(([k,v])=>{if(!m[k]){db.doc('feedback/'+k).set(v).catch(()=>{});m[k]=v}});FB=m;LS.set(FK,FB);paintFbN()},()=>{})}catch(e){}})();
+/* ================= 筛片台（O） ================= */
+const srt=$('srt'),SG=$('srtG');let FILTER='all',ZW=260;const COL=new Set();let io=null;
+const secName=i=>{const s=D.secOf(i);return s?s.name:'开场'};
+function groups(){const g=[];let cur=null;D.ORD.forEach(i=>{const n=secName(i);if(!cur||cur.name!==n){cur={name:n,key:n+'#'+g.length,items:[]};g.push(cur)}cur.items.push(i)});return g}
+function stat(){const ord=D.ORD,hid=ord.filter(i=>D.isHid(i)).length;$('srtN').textContent='放映 '+(ord.length-hid)+' 页 · 隐藏 '+hid+' 页 · 共 '+ord.length+' 页'+(ord.some((x,j)=>x!==j)?' · 已调整顺序':'')}
+function card(i,pos){const c=el('div','srt-c');c.dataset.i=i;c.draggable=true;const tw=el('div','srt-tw');tw.title='点击跳到这一页';
+  const sb=el('div','srt-b');const no=el('i');const kp=el('button','srt-kp');kp.type='button';kp.title='保留 / 隐藏';sb.append(no,el('span',null,'原第 '+(i+1)+' 页'),kp);
+  c.append(tw,sb,el('div','srt-t',ttl(i)));c._no=no;c._kp=kp;c._tw=tw;return c}
+const CARD={};
+function renderSG(){SG.textContent='';stat();if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const c=e.target;thumbInto(c._tw,+c.dataset.i,ZW);c._done=1;io.unobserve(c)}}),{root:SG,rootMargin:'400px'});
+  let play=0;const cur=D.cur();
+  groups().forEach(g=>{const n=g.items.length,hid=g.items.filter(i=>D.isHid(i)).length;const h=el('div','srt-g');
+    const gc=el('button','srt-gc',COL.has(g.name)?'▸':'▾');gc.type='button';const b=el('b',null,g.name);const gx=el('button','srt-gx',hid===n?'恢复本章':'隐藏本章');gx.type='button';
+    const tog=()=>{COL.has(g.name)?COL.delete(g.name):COL.add(g.name);renderSG()};gc.onclick=tog;b.onclick=tog;
+    gx.onclick=()=>{const all=g.items.every(i=>D.isHid(i));g.items.forEach(i=>D.setHid(i,!all));D.repaint();renderSG()};
+    h.append(gc,b,el('span',null,(n-hid)+' / '+n+' 页'),gx);SG.append(h);
+    g.items.forEach(i=>{const hd=D.isHid(i);if(!hd)play++;const c=CARD[i]||(CARD[i]=card(i));c.classList.toggle('off',hd);c.classList.toggle('cur',i===cur);c.classList.toggle('fbm',!!FB[IDS[i]]);
+      c._no.textContent=hd?'—':String(play).padStart(2,'0');c._kp.textContent=hd?'已隐藏':'保留';
+      c.style.display=((FILTER==='keep'&&hd)||(FILTER==='hide'&&!hd)||COL.has(g.name))?'none':'';
+      if(c._zw!==ZW){c._zw=ZW;c._done=0}SG.append(c);if(!c._done)io.observe(c)})});}
+function openSRT(){closeFB();closeFBS();srt.classList.add('open');renderSG();const c=CARD[D.cur()];if(c)setTimeout(()=>c.scrollIntoView({block:'center'}),30)}
+function closeSRT(){srt.classList.remove('open');D.repaint()}
+SG.addEventListener('click',e=>{const c=e.target.closest('.srt-c');if(!c)return;const i=+c.dataset.i;
+  if(e.target.closest('.srt-kp')){D.setHid(i,!D.isHid(i));D.repaint();renderSG();return}
+  if(e.target.closest('.srt-tw')){closeSRT();D.jump(i)}});
+let dragI=null;
+SG.addEventListener('dragstart',e=>{const c=e.target.closest('.srt-c');if(!c)return;dragI=+c.dataset.i;c.classList.add('drag');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',String(dragI))}catch(_){}});
+SG.addEventListener('dragend',()=>{SG.querySelectorAll('.drag,.bf,.af').forEach(x=>x.classList.remove('drag','bf','af'));dragI=null});
+SG.addEventListener('dragover',e=>{if(dragI===null)return;e.preventDefault();SG.querySelectorAll('.bf,.af').forEach(x=>x.classList.remove('bf','af'));const c=e.target.closest('.srt-c');if(!c||+c.dataset.i===dragI)return;const r=c.getBoundingClientRect();c.classList.add(e.clientX<r.left+r.width/2?'bf':'af')});
+SG.addEventListener('drop',e=>{e.preventDefault();const c=e.target.closest('.srt-c');if(dragI===null||!c||+c.dataset.i===dragI)return;const r=c.getBoundingClientRect(),after=e.clientX>=r.left+r.width/2;
+  const o=D.ORD.filter(x=>x!==dragI);o.splice(o.indexOf(+c.dataset.i)+(after?1:0),0,dragI);D.setOrder(o);renderSG()});
+$('srtF').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;FILTER=b.dataset.f;$('srtF').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));renderSG()});
+$('srtZ').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ZW=+b.dataset.w;srt.style.setProperty('--sw',ZW+'px');$('srtZ').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));renderSG()});
+$('srtCA').onclick=()=>{groups().forEach(g=>COL.add(g.name));renderSG()};$('srtEA').onclick=()=>{COL.clear();renderSG()};
+$('srtReset').onclick=()=>{D.resetOrder();renderSG()};
+$('srtAll').onclick=()=>{S.forEach((s,i)=>{if(D.isHid(i)&&s.dataset.tier!=='x')D.setHid(i,false)});D.repaint();renderSG()};
+$('srtX').onclick=closeSRT;
+$('srtCp').onclick=()=>{let n=0;const ord=D.ORD;const t='【放映的页，按顺序】\n'+ord.filter(i=>!D.isHid(i)).map(i=>(++n)+'. 原第 '+(i+1)+' 页 · '+IDS[i]+' · '+ttl(i)).join('\n')+'\n\n【隐藏的页】\n'+(ord.filter(i=>D.isHid(i)).map(i=>'原第 '+(i+1)+' 页 · '+IDS[i]+' · '+ttl(i)).join('\n')||'无');
+  const b=$('srtCp');navigator.clipboard.writeText(t).then(()=>{b.textContent='已复制'},()=>{const r=$('srtRaw');r.style.display='block';r.value=t;r.select();b.textContent='已选中，按 Ctrl/⌘+C'}).finally(()=>setTimeout(()=>b.textContent='复制清单',2200))};
+/* ================= 演讲者视图：下一页缩略图 ================= */
+function pvThumb(){if(!document.body.classList.contains('presenter'))return;const box=$('pvThumb');if(!box)return;const j=D.nxt(D.cur(),1);
+  if(j<0){box.textContent='';box.append(el('div','end2','已是最后一页'));return}thumbInto(box,j,box.clientWidth||400)}
+document.addEventListener('deck:render',()=>{pvThumb();if(fb.classList.contains('open'))openFB()});
+$('pvRs').onclick=()=>{D.resetTimer();$('pvTimer').textContent='00:00'};
+new MutationObserver(()=>setTimeout(pvThumb,60)).observe(document.body,{attributes:true,attributeFilter:['class']});
+/* ================= 讲稿字号 ================= */
+let SZ=+(LS.get('deckkit-scrz',1))||1;const applySZ=()=>document.documentElement.style.setProperty('--scrz',SZ);applySZ();
+$('scrZm').onclick=()=>{SZ=Math.max(.8,+(SZ-.1).toFixed(2));applySZ();LS.set('deckkit-scrz',SZ)};
+$('scrZp').onclick=()=>{SZ=Math.min(1.8,+(SZ+.1).toFixed(2));applySZ();LS.set('deckkit-scrz',SZ)};
+/* ================= 短页居中（只在 70% 区域内） ================= */
+const LIMIT=630;
+function balance(){S.forEach(s=>{if(s.classList.contains('hero')||s.classList.contains('act')||s.classList.contains('stmt')||s.dataset.balance==='0')return;
+  const mv=[...s.querySelectorAll(':scope > .body, :scope > .kick, :scope > .insight')];if(!mv.length)return;mv.forEach(x=>x.style.translate='');
+  const was=s.classList.contains('active');if(!was)s.style.display='flex';
+  const top=s.getBoundingClientRect().top,k=s.getBoundingClientRect().height/900;let bot=0;
+  mv.forEach(x=>x.querySelectorAll('*').forEach(e=>{const q=e.getBoundingClientRect();if(q.height>0)bot=Math.max(bot,(q.bottom-top)/k)}));
+  mv.forEach(x=>{const q=x.getBoundingClientRect();if(q.height>0)bot=Math.max(bot,(q.bottom-top)/k)});
+  if(!was)s.style.display='';
+  const d=Math.round((LIMIT-bot)*0.4);if(d>40)mv.forEach(x=>x.style.translate='0 '+Math.min(d,140)+'px')})}
+let bT;const reb=()=>{clearTimeout(bT);bT=setTimeout(balance,120)};
+window.__balance=balance;
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(reb);else reb();
+new MutationObserver(reb).observe(document.documentElement,{attributes:true,attributeFilter:['style','data-theme']});
+/* ================= #页面id 直达 ================= */
+{const h=decodeURIComponent((window.__hash0||'').slice(1));if(h&&!/^\d+$/.test(h)){const j=IDS.indexOf(h);if(j>=0)D.jump(j)}}
+/* ================= 按键（捕获阶段，面板打开时不翻页） ================= */
+document.addEventListener('keydown',e=>{const k=e.key,inText=e.target.closest&&e.target.closest('textarea,input');
+  if(fb.classList.contains('open')){if(k==='Escape'){e.preventDefault();closeFB()}else if((e.metaKey||e.ctrlKey)&&k==='Enter'){e.preventDefault();saveFB()}e.stopImmediatePropagation();return}
+  if(fbs.classList.contains('open')){if(k==='Escape')closeFBS();e.stopImmediatePropagation();return}
+  if(srt.classList.contains('open')){if(k==='Escape'||k==='o'||k==='O'){e.preventDefault();closeSRT()}e.stopImmediatePropagation();return}
+  if(inText)return;
+  if(k==='o'||k==='O'){e.preventDefault();e.stopImmediatePropagation();openSRT()}
+  else if(k==='e'||k==='E'){e.preventDefault();e.stopImmediatePropagation();openFB()}
+},true);
+$('bO').onclick=e=>{e.stopPropagation();openSRT()};$('bE').onclick=e=>{e.stopPropagation();openFB()};
+paintFbN();window.__deckv2={openSRT,closeSRT,openFB,openFBS,balance};
+})();
+</script>
+
 </body></html>
