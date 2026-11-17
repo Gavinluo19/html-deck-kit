@@ -674,7 +674,7 @@ body.safe .slide.active::after{content:"70% 安全线";position:absolute;left:0;
 .flow3{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;align-items:stretch}
 .flow3 .a{display:grid;place-items:center;color:var(--ink-3);font-size:20px}
 .flow3 .bx{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:15px;line-height:1.55;color:var(--ink-2)}
-.flow3 .bx .k{font-size:12px;letter-spacing:.12em;font-weight:700;color:var(--clay);margin-bottom:4px}
+.flow3 .bx .k{font-size:13px;letter-spacing:.12em;font-weight:700;color:var(--clay);margin-bottom:4px}
 .flow3 .bx.hl{background:var(--clay-soft);border-color:#E8C9B6}
 .flow3 .bx q{display:block;font-family:var(--f-display);color:var(--ink);quotes:"“" "”";margin-bottom:3px}
 .morig2{font-size:13px;color:var(--ink-3);line-height:1.6;border-left:3px solid var(--sky);padding:2px 0 2px 10px}
@@ -816,6 +816,30 @@ body.safe .slide.active::after{content:"70% 安全线";position:absolute;left:0;
   --hl-line:#C6DAFC; --blue-line:#F4C7CC;
 }
 [data-theme="stellar"] .kick em,[data-theme="stellar"] .insight em{background:linear-gradient(90deg,#4285F4,#9B72CB,#D96570);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- 6. notebook（纸本 · Notebook，v2.2：暖米点阵 · 粗宋标题 · 墨线卡片 + 硬阴影） ---------- */
+[data-theme="notebook"]{
+  --paper:#F6F0E6; --paper-2:#EFE6D8; --card:#FFFDF8; --line:#E3D9CB;
+  --ink:#221D1A; --ink-2:#3B3431; --ink-3:#7A6E62;
+  --clay:#E4572E; --clay-soft:#FBE3D6; --kraft:#B8860B; --manilla:#FBF0CF;
+  --sky:#4A74B4; --sky-soft:#E3EBF6; --warn:#C0392B; --ok:#2E9073;
+  --slate:#2A2420; --on-slate:#F6F0E6; --on-slate-2:#B9AC9C;
+  --f-display:"Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong",serif;
+  --f-body:"Noto Sans SC","Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --stage-bg:#2A2420;
+  --hero-bg:#F6F0E6; --hero-ink:#221D1A; --hero-sub:#3B3431; --hero-org:#E4572E; --hero-credit:#9A8F83; --hero-lb:#7A6E62;
+  --hero-grad:linear-gradient(90deg,#221D1A 0%,#E4572E 100%);
+  --hero-veil:linear-gradient(90deg,rgba(246,240,230,.97) 0%,rgba(246,240,230,.86) 42%,rgba(246,240,230,.25) 100%);
+  --hero-grain:rgba(34,29,26,.22);
+  --net-1:122,110,98; --net-2:228,87,46; --net-3:184,134,11; --net-pulse:228,87,46;
+  --hl-line:#E4572E; --blue-line:#4A74B4; --frame-bg:#FFFDF8;
+  --nb-shadow:6px 6px 0 #DED4C5;
+}
+[data-theme="notebook"] .slide:not(.hero):not(.dark){background:var(--paper) radial-gradient(#DCD2C3 1.1px,transparent 1.5px) 0 0/26px 26px}
+[data-theme="notebook"] h2{font-weight:900}
+[data-theme="notebook"] :is(.box,.ex .e,.ovc,.flow3 .bx,.lvc,.rd,.chk,.ann,.xc,.scope .sn,.mc,.ovm){border:2px solid var(--ink);box-shadow:var(--nb-shadow)}
+[data-theme="notebook"] :is(.box.hl,.flow3 .bx.hl,.rd.hot,.chk.on){border-color:var(--clay)}
+[data-theme="notebook"] .hero .who .sep{background:rgba(0,0,0,.18)}
 
 /* ---------- 组件接入 token（覆盖引擎里的固定色值） ---------- */
 body{background:var(--stage-bg)}
@@ -963,6 +987,180 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 .locator .ic{width:26px;height:26px;color:inherit}
 
 .sed{font-size:13px;color:#A39E91;border-left:2px solid #57534a;padding:4px 10px;line-height:1.6}
+
+/* =====================================================================
+   v2.2 · 版面三档 · 用途型动效 M1–M6 · 页型标签与分类色 · 新组件 · 打印
+   ===================================================================== */
+/* ---------- 新 token（主题可覆盖；:where 让主题块优先） ---------- */
+:where(html){
+  --ok:#2E8A5F;
+  --cat-case:var(--sky); --cat-ex:var(--ok); --cat-fw:#7C5CC4;
+  --f-num:"Archivo","Bahnschrift","DIN Alternate","Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+}
+[data-theme="void"]{--ok:#3DD68C;--cat-fw:#A78BFA}
+.slide{--pc:var(--clay)}
+.slide[data-cat="case"]{--pc:var(--cat-case)}
+.slide[data-cat="ex"]{--pc:var(--cat-ex)}
+.slide[data-cat="fw"]{--pc:var(--cat-fw)}
+.fnum,.pageno{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+
+/* ---------- 版面三档：安全线随档位移动 ---------- */
+body.safe .slide.active[data-zone="75"]::after{top:675px;content:"75% 安全线（图解页）"}
+body.safe .slide.active[data-zone="full"]::after{top:830px;content:"全幅页底线 830px"}
+
+/* ---------- 页型标签（右上角）与分类色 ---------- */
+.eyebrow .ptag{margin-left:auto;font-size:15px;font-weight:700;letter-spacing:.08em;color:var(--pc);background:color-mix(in srgb,var(--pc) 12%,transparent);border-radius:8px;padding:4px 12px;white-space:nowrap}
+.slide[data-cat] .pageno{color:var(--pc)}
+.dark .eyebrow .ptag{color:var(--on-slate);background:rgba(255,255,255,.1)}
+
+/* ---------- 标签结论条 .cl ---------- */
+.cl{--c:var(--clay);display:flex;gap:16px;align-items:flex-start;border-radius:14px;padding:16px 22px;font-size:21px;line-height:1.6;background:color-mix(in srgb,var(--c) 10%,var(--card));color:var(--ink)}
+.cl>.lb{flex:none;font-size:15px;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--c);border-radius:7px;padding:3px 10px;margin-top:5px;white-space:nowrap}
+.cl.q{--c:var(--warn)} .cl.ok{--c:var(--clay)} .cl.std{--c:var(--ok)} .cl.tip{--c:var(--sky)}
+.cl b{color:var(--ink)}
+
+/* ---------- 范围括号 + 上下游虚框 .scope（T17） ---------- */
+.scope{display:flex;align-items:flex-end;gap:0}
+.scope .gh{flex:none;width:112px;height:104px;border:1.5px dashed var(--ink-3);border-radius:12px;background:var(--paper-2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--ink-3);font-size:18px;font-weight:700}
+.scope .gh small{font-size:15px;font-weight:400}
+.scope .dl{flex:none;width:64px;height:104px;position:relative}
+.scope .dl::before{content:"";position:absolute;left:4px;right:4px;top:51px;border-top:2px dashed var(--ink-3)}
+.scope .dl .x{position:absolute;left:50%;top:52px;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--warn);color:#fff;font:700 16px/26px var(--f-body);text-align:center}
+.scope .mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.scope .brk{position:relative;height:20px;margin:0 6px;border:2px solid var(--clay);border-bottom:0;border-radius:4px 4px 0 0}
+.scope .brk span{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);white-space:nowrap;font-size:19px;font-weight:700;color:var(--clay)}
+.scope .brk span small{display:block;text-align:center;font-size:15px;font-weight:500;color:var(--ink-3);letter-spacing:.12em}
+.scope .row{display:flex;align-items:center}
+.scope .sn{flex:1;min-width:0;height:104px;display:grid;place-items:center;text-align:center;border:1.5px solid var(--ink-2);background:var(--card);border-radius:12px;font-size:20px;font-weight:700;padding:0 6px}
+.scope .ar{flex:none;width:26px;text-align:center;color:var(--ink-2);font-size:20px}
+.scope-why{display:flex;justify-content:space-between;gap:40px;font-size:18px;line-height:1.5;color:var(--warn)}
+.scope-why span{max-width:560px}
+.scope-why span:last-child{text-align:right}
+
+/* ---------- 症状对照（T18） ---------- */
+.chkg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chk{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:18px 20px;color:var(--ink);font-family:var(--f-body)}
+.chk .bx{width:30px;height:30px;border:2px solid var(--ink-3);border-radius:8px;display:grid;place-items:center;font-size:20px;line-height:1;color:transparent;margin-top:2px}
+.chk b{display:block;font-size:22px;line-height:1.35;margin-bottom:4px}
+.chk span{font-size:18px;color:var(--ink-2);line-height:1.5}
+.chk.on{border-color:var(--clay);background:color-mix(in srgb,var(--clay) 6%,var(--card))}
+.chk.on .bx{border-color:var(--clay);background:var(--clay);color:#fff}
+.chk:focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+
+/* ---------- 文档 + 批注（T19） ---------- */
+.doc2{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:start}
+.docb{background:var(--slate);color:var(--on-slate);border-radius:14px;padding:22px 24px;font:18px/1.7 var(--f-mono);display:flex;flex-direction:column;gap:14px}
+.docb .seg{border-left:4px solid var(--c);padding:2px 0 2px 14px}
+.docb .seg small{display:block;font:700 15px/1.4 var(--f-body);letter-spacing:.1em;color:var(--c);margin-bottom:2px}
+.anns{display:flex;flex-direction:column;gap:12px}
+.ann{display:grid;grid-template-columns:32px 1fr;gap:12px;background:var(--card);border:1.5px solid var(--line);border-left:4px solid var(--c);border-radius:12px;padding:14px 16px;font-size:18px;line-height:1.55;color:var(--ink-2)}
+.ann .no{width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font:700 16px/30px var(--f-num);text-align:center}
+.ann b{display:block;font-size:20px;color:var(--ink);margin-bottom:2px}
+.k1{--c:var(--clay)}.k2{--c:var(--sky)}.k3{--c:var(--kraft)}.k4{--c:var(--ok)}
+
+/* ---------- 图解 SVG 通用（T20–T22）：颜色全部走 token ---------- */
+.dgm{display:block;overflow:visible;width:100%;max-width:100%;height:auto;flex:none}
+.dgm text{font-family:var(--f-body)}
+.xcs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.xc{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 18px;font-size:17px;line-height:1.55;color:var(--ink-2)}
+.xc b{display:block;font-size:18px;color:var(--clay);margin-bottom:2px}
+.xc strong{color:var(--ink)}
+
+/* ---------- 练习页（T23）与计时器 ---------- */
+.exh{display:flex;align-items:center;gap:24px}
+.exh h2{flex:1;min-width:0}
+.tm{flex:none;display:inline-flex;align-items:center;gap:6px;border:2px solid var(--pc,var(--clay));border-radius:18px;padding:5px;background:var(--card)}
+.tm .go{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;background:var(--pc,var(--clay));color:#fff;border-radius:13px;padding:8px 18px;font:700 40px/1 var(--f-num);font-variant-numeric:tabular-nums}
+.tm .go i{font-style:normal;font-size:20px;width:22px;text-align:center}
+.tm .rs{all:unset;cursor:pointer;padding:4px 12px;font-size:26px;color:var(--ink-2)}
+.tm .go:focus-visible,.tm .rs:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tm.done .go{background:var(--warn);animation:tmBlink 1s steps(2) 4}
+@keyframes tmBlink{50%{opacity:.4}}
+.rounds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.rd{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.rd.hot{border:2px solid var(--pc)}
+.rd .pill{align-self:flex-start;font-size:15px;font-weight:700;color:var(--pc);background:color-mix(in srgb,var(--pc) 12%,transparent);border-radius:999px;padding:4px 12px}
+.rd h3{font-size:23px}
+.rd ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:r}
+.rd li{counter-increment:r;display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:18px;line-height:1.5;color:var(--ink-2)}
+.rd li::before{content:counter(r);width:26px;height:26px;border-radius:50%;background:var(--pc);color:#fff;font:700 15px/26px var(--f-num);text-align:center;margin-top:1px}
+.rd .ft2{margin-top:auto;font-size:15px;color:var(--ink-3)}
+
+/* ---------- 金句：标点悬挂；居中变体 ---------- */
+.stm .hp{display:inline-block;width:0;white-space:nowrap;font-style:normal}
+.slide.stmt.c .stm,.slide.stmt.c .stm-s{margin-left:auto;margin-right:auto;text-align:center}
+
+/* ---------- 步骤：替换（M6）与只在本步显示 ---------- */
+.swap{display:grid}.swap>*{grid-area:1/1}
+[data-out]:not(.step){transition:opacity .3s ease}
+.gone{opacity:0!important;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s!important}
+
+/* ---------- M1 连线画出：<path pathLength="1" class="mx-draw"> ---------- */
+.mx-draw{stroke-dasharray:1;stroke-dashoffset:1}
+.slide.active .mx-draw:not(.step){animation:mxDraw .9s .3s ease-out forwards}
+.mx-draw.step{transform:none;transition:opacity .15s}
+.mx-draw.step.on{animation:mxDraw .9s ease-out forwards}
+@keyframes mxDraw{to{stroke-dashoffset:0}}
+
+/* ---------- M2 聚光：容器 data-mx="focus"，项目 data-f="步号" ---------- */
+[data-mx~="focus"] [data-f]{transition:opacity .3s ease}
+[data-mx~="focus"].mx-on [data-f]:not(.mx-cur):is(.on,:not(.step)){opacity:.3}
+
+/* ---------- M3 重点标注：马克笔 / 圈 / 下划线 / 划掉 ---------- */
+mark.mx-sweep{background-size:0% 100%;background-repeat:no-repeat;background-position:0 0}
+.mx-ring,.mx-under,.mx-strike{position:relative;display:inline-block}
+.mx-ring::after,.mx-under::after,.mx-strike::after{content:"";position:absolute;pointer-events:none}
+.mx-ring::after{inset:-8px -14px;border:3px solid var(--clay);border-radius:50%;clip-path:inset(0 100% 0 0)}
+.mx-under::after{left:0;right:0;bottom:-6px;height:4px;border-radius:2px;background:var(--clay);transform:scaleX(0);transform-origin:left}
+.mx-strike::after{left:-4px;right:-4px;top:54%;height:3px;background:var(--warn);transform:scaleX(0);transform-origin:left}
+.step:is(.mx-sweep,.mx-ring,.mx-under,.mx-strike){opacity:1;transform:none}
+.slide.active mark.mx-sweep:not(.step),mark.mx-sweep.step.on{animation:mxSweep .6s .35s ease-out forwards}
+.slide.active :is(.mx-ring,.mx-under,.mx-strike):not(.step)::after,:is(.mx-ring,.mx-under,.mx-strike).step.on::after{animation:mxLine .6s .35s ease-out forwards}
+.slide.active .mx-ring:not(.step)::after,.mx-ring.step.on::after{animation-name:mxRing}
+@keyframes mxSweep{to{background-size:100% 100%}}
+@keyframes mxLine{to{transform:scaleX(1)}}
+@keyframes mxRing{to{clip-path:inset(0 0 0 0)}}
+
+/* ---------- M5 跨页变形（View Transitions） ---------- */
+::view-transition-group(*){animation-duration:.45s;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.25s}
+
+/* ---------- 动效关闭（M 键）、减少动态、缩略图：一律终态 ---------- */
+body.nomx *,body.nomx *::before,body.nomx *::after,.mx-final *,.mx-final *::before,.mx-final *::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}
+body.nomx .step{transform:none!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .step{transform:none!important}
+}
+
+/* ---------- 功能区自动隐藏；演讲者视图常显 ---------- */
+#hint,.fbtn{transition:opacity .4s ease}
+body.ui-idle #hint:not(:hover):not(:focus-within),body.ui-idle .fbtn:not(:hover):not(:focus-visible){opacity:0;pointer-events:none}
+body.presenter #hint{opacity:1!important;pointer-events:auto!important}
+
+/* ---------- 对外放映（K）：隐藏眉标、页码、说明与改稿入口 ---------- */
+body.clean .slide .eyebrow,body.clean .slide .pageno,body.clean .slide .cav,body.clean .hidbadge,body.clean .mchip{visibility:hidden}
+body.clean .slide .eyebrow .ptag{visibility:visible}
+body.clean #bE,body.clean #bO{display:none}
+
+/* ---------- 打印：一页一张，显示全部步骤（浏览器“打印 → 存为 PDF”） ---------- */
+@media print{
+  @page{size:1600px 900px;margin:0}
+  body.deckprint{background:#fff!important;overflow:visible!important;height:auto!important;margin:0!important}
+  body.deckprint>*:not(#viewport){display:none!important}
+  body.deckprint #viewport{position:static!important;display:block!important;overflow:visible!important}
+  body.deckprint #stage{position:static!important;transform:none!important;width:1600px!important;height:auto!important}
+  body.deckprint .slide{display:flex!important;position:relative!important;inset:auto!important;width:1600px;height:900px;box-sizing:border-box;break-after:page;page-break-after:always;break-inside:avoid}
+  body.deckprint .slide.pr-skip{display:none!important}
+  body.deckprint .step{opacity:1!important;transform:none!important}
+  body.deckprint [data-out]:not(.step){display:none!important}
+  body.deckprint .hidbadge,body.deckprint .slide::after{display:none!important}
+  body.deckprint *,body.deckprint *::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
+  body.deckprint .mx-draw{stroke-dashoffset:0!important}
+  body.deckprint mark.mx-sweep{background-size:100% 100%!important}
+  body.deckprint :is(.mx-ring,.mx-under,.mx-strike)::after{transform:none!important;clip-path:none!important}
+  body.deckprint #tplcredit{position:fixed}
+}
 </style>
 
 <div id="progress"></div>
@@ -997,7 +1195,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <!-- T0 讲法说明（讲师页，默认隐藏） -->
 <section class="slide" id="s-ver" data-title="讲法说明（讲师用）" data-hidden="1" data-key="讲师用：精讲 / 完整两档；快捷键说明。" data-sec-time="30" data-tier="x">
   <div class="eyebrow">讲师用 · 讲法说明（默认隐藏）</div>
-  <h2>一份文件，两种讲法：默认精讲，需要时加回完整页</h2>
+  <h2>一份文件两种讲法：默认精讲，按需加页</h2>
   <div class="body">
     <div class="ver2">
       <div class="tier tc-c"><div style="display:flex;align-items:baseline;gap:14px"><span class="num">C</span><span class="t">精讲版</span></div><p>data-tier="c"：主线 + 每步 1 页核心方法 + 关键案例。</p></div>
@@ -1006,7 +1204,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
     <div class="cols c3" style="flex:none;gap:14px">
       <div class="note"><span class="tag">翻页</span><span>→ / 空格 前进；← 后退；G 目录；O 筛片台；E 修改本页。</span></div>
       <div class="note"><span class="tag">讲稿</span><span>S 逐字稿；P 演讲者视图；N 底部讲稿条；F 全屏。</span></div>
-      <div class="note"><span class="tag">调整</span><span>T 换主题；+ / − 正文字号；H 显示隐藏页；L 70% 安全线。</span></div>
+      <div class="note"><span class="tag">调整</span><span>T 换主题；+ / − 正文字号；H 显示隐藏页；L 安全线；M 动效开关；K 对外放映。</span></div>
     </div>
   </div>
   <div class="foot"><span class="src"><b>说明</b> 本页为讲师说明页，正常翻页会跳过</span><span class="pageno"></span></div>
@@ -1034,7 +1232,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <!-- T3 总—分—总 全课地图 -->
 <section class="slide" id="s-ov" data-czmax="1.2" data-title="一页看懂全课（总-分-总）" data-key="总：一句话；分：步骤卡 + 每步用到的模型；AI 行：提速对比；总：结论。" data-sec-time="150" data-sec="全课地图" data-tier="c">
   <div class="eyebrow">全课地图 · 总 — 分 — 总</div>
-  <h2>一页看懂：先定目标，再走 N 步，最后落到一页纸</h2>
+  <h2>一页看懂：定目标，走 N 步，落到一页纸</h2>
   <div class="body" style="gap:8px;margin-top:18px">
     <div class="zrow step"><div class="zlab">总</div><div class="zbox">一句话说清全课：用<b>某个方法</b>，从<b>起点</b>走到<b>终点</b>。</div></div>
     <div class="zrow step"><div class="zlab k">分</div>
@@ -1144,7 +1342,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <!-- T6 拆解页（层层深挖，逐步弹出） -->
 <section class="slide" id="s-break" data-title="拆解页" data-key="原话 → 表层 → 本质 → 机会；顺序本身就是重点时才逐步弹出。" data-sec-time="100" data-tier="c">
   <div class="eyebrow">第 2 章 · 第 2 步 · 拆解页</div>
-  <h2>拆解页：从“他说什么”，剥到“他为什么这么说”</h2>
+  <h2>拆解页：从“说什么”剥到“为什么”</h2>
   <div class="mdl"><b>模型</b><span><em>三层剥离</em>：表层需求 → 本质需求 → 潜在机会。</span></div>
   <div class="body">
     <div class="voice step">“一句真实的用户原话放在这里。”<small>来源 · 渠道</small></div>
@@ -1215,18 +1413,18 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <!-- T10 交互：四象限 -->
 <section class="slide" id="s-quad" data-czmax="1.06" data-title="交互：四象限" data-key="点击圆点查看说明；右下角是重点象限。" data-sec-time="120" data-tier="c">
   <div class="eyebrow">第 3 章 · 第 5 步 · 四象限（点击互动）</div>
-  <h2>四象限：找“很重要、但现在很不满意”的地方</h2>
+  <h2>四象限：找“重要但不满意”的地方</h2>
   <div class="mdl"><b>模型</b><span><em>机会地图</em>：横轴重要性，纵轴满意度——右下角是核心机会。</span></div>
   <div class="body"><div class="qd" style="grid-template-columns:460px 1fr">
     <svg viewBox="0 0 600 430" aria-label="四象限示意图" style="width:460px;height:330px">
       <rect x="300" y="210" width="280" height="190" style="fill:var(--clay-soft)"/><rect x="300" y="20" width="280" height="190" style="fill:var(--sky-soft)"/>
       <rect x="20" y="210" width="280" height="190" style="fill:var(--manilla)"/><rect x="20" y="20" width="280" height="190" style="fill:var(--paper-2)"/>
       <line x1="20" y1="210" x2="580" y2="210" style="stroke:var(--ink-3)" stroke-dasharray="5 5"/><line x1="300" y1="20" x2="300" y2="400" style="stroke:var(--ink-3)" stroke-dasharray="5 5"/>
-      <g font-size="17" font-weight="700"><text x="440" y="390" text-anchor="middle" style="fill:var(--clay)">核心机会 · 立刻投入</text><text x="440" y="46" text-anchor="middle" style="fill:var(--ink-2)">优势 · 持续维护</text><text x="160" y="390" text-anchor="middle" style="fill:var(--ink-2)">次要 · 有空再做</text><text x="160" y="46" text-anchor="middle" style="fill:var(--ink-2)">过度 · 简化降本</text></g>
-      <text x="580" y="424" font-size="14" text-anchor="end" style="fill:var(--ink-3)">重要性 →</text><text x="26" y="16" font-size="14" style="fill:var(--ink-3)">↑ 满意度</text>
-      <g class="pt2" data-n="节点 A" data-t="核心机会" data-c="var(--clay)" data-d="表层反馈 → 底层任务 → 机会重构。"><circle cx="490" cy="320" r="20" style="fill:var(--clay)"/><text x="420" y="292" font-size="16" style="fill:var(--ink)">节点 A</text></g>
-      <g class="pt2" data-n="节点 B" data-t="优势" data-c="var(--sky)" data-d="用户在意且满意：持续维护。"><circle cx="460" cy="110" r="14" style="fill:var(--sky)"/><text x="440" y="100" font-size="16" text-anchor="end" style="fill:var(--ink)">节点 B</text></g>
-      <g class="pt2" data-n="节点 C" data-t="过度" data-c="var(--ink-3)" data-d="做了很多但少有人提：简化降本。"><circle cx="150" cy="110" r="13" style="fill:var(--ink-3)"/><text x="170" y="115" font-size="16" style="fill:var(--ink)">节点 C</text></g>
+      <g font-size="18" font-weight="700"><text x="440" y="390" text-anchor="middle" style="fill:var(--clay)">核心机会 · 立刻投入</text><text x="440" y="46" text-anchor="middle" style="fill:var(--ink-2)">优势 · 持续维护</text><text x="160" y="390" text-anchor="middle" style="fill:var(--ink-2)">次要 · 有空再做</text><text x="160" y="46" text-anchor="middle" style="fill:var(--ink-2)">过度 · 简化降本</text></g>
+      <text x="580" y="424" font-size="18" text-anchor="end" style="fill:var(--ink-3)">重要性 →</text><text x="26" y="16" font-size="18" style="fill:var(--ink-3)">↑ 满意度</text>
+      <g class="pt2" data-n="节点 A" data-t="核心机会" data-c="var(--clay)" data-d="表层反馈 → 底层任务 → 机会重构。"><circle cx="490" cy="320" r="20" style="fill:var(--clay)"/><text x="420" y="292" font-size="18" style="fill:var(--ink)">节点 A</text></g>
+      <g class="pt2" data-n="节点 B" data-t="优势" data-c="var(--sky)" data-d="用户在意且满意：持续维护。"><circle cx="460" cy="110" r="14" style="fill:var(--sky)"/><text x="440" y="100" font-size="18" text-anchor="end" style="fill:var(--ink)">节点 B</text></g>
+      <g class="pt2" data-n="节点 C" data-t="过度" data-c="var(--ink-3)" data-d="做了很多但少有人提：简化降本。"><circle cx="150" cy="110" r="13" style="fill:var(--ink-3)"/><text x="170" y="115" font-size="18" style="fill:var(--ink)">节点 C</text></g>
     </svg>
     <div>
       <div class="qinfo"><div class="t">点击左图的圆点</div><span class="tg" style="background:var(--ink-3)">象限</span><p>看每个节点的说明。</p></div>
@@ -1245,7 +1443,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <!-- T11 分级卡（五级，上下对应） -->
 <section class="slide" id="s-level" data-title="分级卡" data-key="五级横排：每级“会说 / 会做 / 真实例子”上下对应。" data-sec-time="110" data-tier="f">
   <div class="eyebrow">第 3 章 · 分级卡</div>
-  <h2>分级卡：每一级都写“会说什么、会做什么、真实例子”</h2>
+  <h2>分级卡：每级写清会说、会做、例子</h2>
   <div class="mdl"><b>模型</b><span><em>五级阶梯</em>：越往右，越伤生意。</span></div>
   <div class="body"><div class="lv5">
     <div class="lvc step"><div class="h"><span>L1</span><b>轻微</b></div><div class="r"><i>会说</i>“还行吧”</div><div class="r"><i>会做</i>照样买</div><div class="ex">“真实评论原文”<small>来源</small></div></div>
@@ -1268,7 +1466,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
     <div class="locator" style="--n:6">
       <div class="done"><i>01</i><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg><b>选场景</b></div>
       <div class="done"><i>02</i><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><b>找问题</b></div>
-      <div class="cur"><i>03 · 现在</i><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><b>拆流程</b></div>
+      <div class="cur" data-morph="cur-step"><i>03 · 现在</i><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><b>拆流程</b></div>
       <div><i>04</i><svg class="ic" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><b>集数据</b></div>
       <div><i>05</i><svg class="ic" viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M3 20h18"/></svg><b>做工具</b></div>
       <div><i>06</i><svg class="ic" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><b>看结果</b></div>
@@ -1282,7 +1480,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 
 <!-- T14 截图编号批注 -->
 <section class="slide" id="s-pins" data-czmax="1.12" data-title="截图编号批注" data-key="左截图右解释：截图上打编号，右侧按编号逐条说明，重点一条用强调色。" data-sec-time="90" data-tier="c">
-  <div class="eyebrow">第 2 章 · 媒体 · 截图编号批注</div>
+  <div class="eyebrow" data-morph="cur-step">第 2 章 · 媒体 · 截图编号批注</div>
   <h2>一张截图，看懂<mark>四个</mark>关键位置</h2>
   <div class="body"><div class="gx">
     <div class="frame rel" style="height:300px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--card)">
@@ -1330,10 +1528,133 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <!-- T16 金句页 -->
 <section class="slide stmt" id="s-stmt" data-title="金句页" data-key="一句话，不放卡片；只用一个重点词。" data-sec-time="30" data-tier="c">
   <div class="eyebrow">第 2 章 · 小结 · 金句页</div>
-  <div class="stm">工具每年都在换，<br>好的<mark>判断</mark>可以一直复用。</div>
+  <div class="stm">工具每年都在换，<br>好的<mark class="mx-sweep">判断</mark>可以一直复用。</div>
   <div class="stm-s">一句话 ≤ 24 字，最多 2 行；只用一个重点词；下面一行写出处或一句解释。</div>
   <div class="foot"><span class="src"><b>出处</b> 讲师原创</span><span class="pageno"></span></div>
   <aside class="notes"><p data-s="0">【金句】停一下，把这一句念慢一点。</p></aside>
+</section>
+
+
+<!-- ===== v2.2 新增模板 T17–T23 ===== -->
+<!-- T17 范围与断点 -->
+<section class="slide" id="s-scope" data-cat="case" data-title="范围与断点" data-key="本部门这一段是通的；断点在上下游的两次交接。" data-sec-time="90" data-sec="v2.2 新模板" data-tier="c">
+  <div class="eyebrow">第 3 章 · 案例 · 范围与断点<span class="ptag">案例 · 团餐</span></div>
+  <h2>部门内是通的，<mark>断点</mark>在两头交接</h2>
+  <div class="body" style="gap:22px">
+    <p class="lede">站在运营部里画，这条线从接到销售交接，一直画到谈完续约。</p>
+    <div class="scope" style="margin-top:38px">
+      <div class="gh">销售<small>上游</small></div>
+      <div class="dl"><span class="x step" data-step="2">✕</span></div>
+      <div class="mid">
+        <div class="brk step" data-step="1"><span><small>增长指标</small>续约率</span></div>
+        <div class="row"><div class="sn">接收交接</div><span class="ar">→</span><div class="sn">现场诊断</div><span class="ar">→</span><div class="sn">制定方案</div><span class="ar">→</span><div class="sn">开餐保障</div><span class="ar">→</span><div class="sn">巡检客诉</div><span class="ar">→</span><div class="sn">经营复盘</div><span class="ar">→</span><div class="sn">续约谈判</div></div>
+      </div>
+      <div class="dl"><span class="x step" data-step="2">✕</span></div>
+      <div class="gh">客户<small>下游</small></div>
+    </div>
+    <div class="scope-why step" data-step="2"><span>✕ 交接靠口头：客户的承诺没有写进方案</span><span>✕ 续约只看报表：员工的真实评价没有传到客户</span></div>
+    <div class="cl q step" data-step="3"><span class="lb">问题在这</span><div><b>这段在部门内部确实是通的。</b>但它一头攥在销售手里，一头攥在客户手里，卡点常常不落在这一段上。</div></div>
+  </div>
+  <div class="foot"><span class="src"><b>出处</b> 示例案例</span><span class="cav">说明：示例流程，按实际业务替换</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【开场】站在运营部里看，这条线是通的。</p><p data-s="1">【指范围】续约率管的是中间这一段。</p><p data-s="2">【指断点】但两头的交接都是断的。</p><p data-s="3">【点题】所以卡点不在部门里，在交接处。</p><p class="ed">编辑提示：.gh 是上下游虚框；.brk 是范围括号；断点用 .dl 里的 .x。三组用 data-step 同步弹出。</p></aside>
+</section>
+
+<!-- T18 症状对照（可点击打勾） -->
+<section class="slide" id="s-check" data-title="症状对照" data-key="四张卡片对号入座；中了两条以上，先补数据关系。" data-sec-time="80" data-tier="c">
+  <div class="eyebrow">第 3 章 · 互动 · 症状对照<span class="ptag">现场自测</span></div>
+  <h2>对号入座：这四种情况，你中了几条？</h2>
+  <div class="body">
+    <div class="chkg">
+      <button type="button" class="chk"><span class="bx">✓</span><span><b>数据散在各个表里</b><span>每次复盘都要人工拼表</span></span></button>
+      <button type="button" class="chk"><span class="bx">✓</span><span><b>交接靠口头和群消息</b><span>换一个人，信息就断了</span></span></button>
+      <button type="button" class="chk"><span class="bx">✓</span><span><b>客户和用户的声音分不开</b><span>付钱的人和用的人混在一起看</span></span></button>
+      <button type="button" class="chk"><span class="bx">✓</span><span><b>AI 工具各用各的</b><span>做出来的结果彼此不能组合</span></span></button>
+    </div>
+    <div class="swap">
+      <div class="cl tip" data-out="1"><span class="lb">怎么做</span><div>点一下卡片打勾。已选 <b class="fnum" data-chk-n>0</b> 条。</div></div>
+      <div class="cl q step"><span class="lb">怎么判断</span><div>中了 <b>2 条以上</b>：先补数据和数据之间的关系，再谈 AI 工具。</div></div>
+    </div>
+  </div>
+  <div class="foot"><span class="src"><b>出处</b> 课堂自测</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【抛问题】请大家对照这四张卡片，自己数一数中了几条。</p><p data-s="1">【给标准】中了两条以上的，先补关系，再上工具。</p><p class="ed">编辑提示：.chk 点击只打勾不翻页；.swap 里第一条 data-out="1" 在第 1 步离场，第二条原位出现（M6）。</p></aside>
+</section>
+
+<!-- T19 文档 + 批注（聚光） -->
+<section class="slide" id="s-doc" data-zone="75" data-title="文档 + 批注" data-key="左边一段提示词分三段着色；右边逐段批注，讲哪段亮哪段。" data-sec-time="110" data-tier="c">
+  <div class="eyebrow">第 4 章 · 写法 · 文档 + 批注<span class="ptag">框架</span></div>
+  <h2>好提示词分三段：<mark>身份</mark>、任务、格式</h2>
+  <div class="body" data-mx="focus">
+    <div class="doc2">
+      <div class="docb">
+        <div class="seg k1" data-f="1"><small>① 身份</small>你是一位餐饮行业的用户研究员。</div>
+        <div class="seg k2" data-f="2"><small>② 任务</small>根据下面 20 条评论，找出 3 个最常见的不满。</div>
+        <div class="seg k3" data-f="3"><small>③ 格式</small>每条写：原话 + 出现次数 + 一句解读。</div>
+      </div>
+      <div class="anns">
+        <div class="ann k1 step" data-f="1"><span class="no">1</span><div><b>先给身份</b>决定它用什么视角看材料。</div></div>
+        <div class="ann k2 step" data-f="2"><span class="no">2</span><div><b>任务写成可数的结果</b>“3 个”比“一些”好验收。</div></div>
+        <div class="ann k3 step" data-f="3"><span class="no">3</span><div><b>规定格式</b>结果可以直接贴进汇报。</div></div>
+      </div>
+    </div>
+    <div class="cl ok step"><span class="lb">结论</span><div>三段写全，AI 的结果才能<b>直接验收</b>。</div></div>
+  </div>
+  <div class="foot"><span class="src"><b>出处</b> 示例提示词</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【展示】这是一段写得比较完整的提示词。</p><p data-s="1">【指①】第一段，先给身份。</p><p data-s="2">【指②】第二段，任务要能数。</p><p data-s="3">【指③】第三段，规定格式。</p><p data-s="4">【点题】三段写全，结果才能直接验收。</p><p class="ed">编辑提示：容器 data-mx="focus"；左段与右卡写同一个 data-f（= 步号），讲到哪段亮哪段（M2）。最后一步超过 data-f 最大值，全部恢复。</p></aside>
+</section>
+
+<!-- T20 泳道图（全幅页） -->
+<section class="slide" id="s-swim" data-zone="full" data-cat="case" data-title="泳道图" data-key="角色 × 阶段；灰箭头是泳道内流转，强调色箭头是跨泳道交接。" data-sec-time="150" data-tier="c">
+  <div class="eyebrow">第 3 章 · 案例 · 现状泳道图<span class="ptag">案例 · 团餐</span></div>
+  <h2>跨部门交接 6 次，卡点都在<mark>交接处</mark></h2>
+  <div class="body" style="margin-top:20px">
+    <svg class="dgm" viewBox="0 0 1424 566" width="1424" height="566" role="img" aria-label="现状泳道图：6 个阶段 × 5 个泳道，跨泳道交接 6 次"><defs><marker id="sw-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-3)"/></marker><marker id="sw-aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--clay)"/></marker><marker id="sw-ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-2)"/></marker></defs><circle cx="186" cy="30" r="17" style="fill:var(--clay)"/><text x="214" y="37" text-anchor="start" style="font-size:19px;font-weight:700;fill:var(--ink)">客户签约</text><path d="M312 30H584M840 30H1258" style="fill:none;stroke:var(--clay);stroke-width:2.4;stroke-dasharray:2 9;stroke-linecap:round" marker-end="url(#sw-aa)"/><rect x="592" y="8" width="240" height="44" rx="14" style="fill:var(--card);stroke:var(--ink);stroke-width:2"/><text x="712" y="37" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">增长指标 · 用户点餐率</text><text x="1372" y="37" text-anchor="end" style="font-size:19px;font-weight:700;fill:var(--ink)">客户续约</text><circle cx="1400" cy="30" r="17" style="fill:var(--ok)"/><text x="76" y="100" text-anchor="middle" style="font-size:15px;font-weight:400;fill:var(--ink-3)">阶段 →</text><path d="M162 76H352L368 94L352 112H162L178 94Z" style="fill:var(--ink)"/><text x="269" y="100" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">签约交接</text><path d="M372 76H562L578 94L562 112H372L388 94Z" style="fill:var(--ink)"/><text x="479" y="100" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">需求诊断</text><path d="M582 76H772L788 94L772 112H582L598 94Z" style="fill:var(--ink)"/><text x="689" y="100" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">方案配置</text><path d="M792 76H982L998 94L982 112H792L808 94Z" style="fill:var(--ink)"/><text x="899" y="100" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">上线开餐</text><path d="M1002 76H1192L1208 94L1192 112H1002L1018 94Z" style="fill:var(--ink)"/><text x="1109" y="100" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">日常运营</text><path d="M1212 76H1402L1418 94L1402 112H1212L1228 94Z" style="fill:var(--ink)"/><text x="1319" y="100" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">续约</text><rect x="160" y="124" width="1264" height="80" style="fill:var(--paper-2);opacity:.55"/><rect x="0" y="129" width="148" height="70" rx="10" style="fill:var(--paper-2)"/><text x="74" y="170" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">客户企业</text><rect x="0" y="209" width="148" height="70" rx="10" style="fill:var(--paper-2)"/><text x="74" y="250" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">就餐员工</text><rect x="160" y="284" width="1264" height="80" style="fill:var(--paper-2);opacity:.55"/><rect x="0" y="289" width="148" height="70" rx="10" style="fill:var(--paper-2)"/><text x="74" y="330" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">交付运营</text><rect x="0" y="369" width="148" height="70" rx="10" style="fill:var(--paper-2)"/><text x="74" y="410" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">产品与菜品</text><rect x="160" y="444" width="1264" height="80" style="fill:var(--paper-2);opacity:.55"/><rect x="0" y="449" width="148" height="70" rx="10" style="fill:var(--paper-2)"/><text x="74" y="490" text-anchor="middle" style="font-size:17px;font-weight:700;fill:var(--ink)">财务</text><line x1="370" x2="370" y1="124" y2="524" style="stroke:var(--line);stroke-dasharray:3 5"/><line x1="580" x2="580" y1="124" y2="524" style="stroke:var(--line);stroke-dasharray:3 5"/><line x1="790" x2="790" y1="124" y2="524" style="stroke:var(--line);stroke-dasharray:3 5"/><line x1="1000" x2="1000" y1="124" y2="524" style="stroke:var(--line);stroke-dasharray:3 5"/><line x1="1210" x2="1210" y1="124" y2="524" style="stroke:var(--line);stroke-dasharray:3 5"/><rect x="177" y="145" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="265" y="169.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">确认用餐需求</text><rect x="1227" y="145" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1315" y="169.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">续约评估</text><rect x="387" y="225" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="475" y="249.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">口味与价格偏好</text><rect x="807" y="225" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="895" y="249.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">首次点餐</text><rect x="1017" y="225" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1105" y="249.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">日常用餐</text><rect x="177" y="305" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="265" y="329.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">接收销售交接</text><rect x="387" y="305" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="475" y="329.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">现场调研诊断</text><rect x="597" y="305" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="685" y="329.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">制定开餐方案</text><rect x="807" y="305" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="895" y="329.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">开餐保障</text><rect x="1017" y="305" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1105" y="329.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">巡检与客诉</text><rect x="1227" y="305" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1315" y="329.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">续约沟通</text><rect x="597" y="385" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="685" y="409.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">选品配菜</text><rect x="1017" y="465" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1105" y="489.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">月度结算</text><rect x="1227" y="465" width="176" height="38" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1315" y="489.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">回款</text><path d="M353 324H383" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path d="M563 324H593" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path d="M773 324H803" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path d="M983 324H1013" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path d="M1193 324H1223" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path d="M983 244H1013" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path d="M1193 484H1223" style="fill:none;stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><path class="mx-draw step" data-step="1" pathLength="1" d="M265 183V301" style="fill:none;stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><path class="mx-draw step" data-step="1" pathLength="1" d="M475 263V301" style="fill:none;stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><path class="mx-draw step" data-step="1" pathLength="1" d="M685 343V381" style="fill:none;stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><path class="mx-draw step" data-step="1" pathLength="1" d="M895 305V267" style="fill:none;stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><path class="mx-draw step" data-step="1" pathLength="1" d="M1105 263V301" style="fill:none;stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><path class="mx-draw step" data-step="1" pathLength="1" d="M1315 305V187" style="fill:none;stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><rect x="160" y="539" width="28" height="18" rx="4" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="198" y="553" text-anchor="start" style="font-size:15px;font-weight:400;fill:var(--ink-2)">任务（所在泳道 = 责任方）</text><path d="M470 548H516" style="stroke:var(--ink-3);stroke-width:1.6" marker-end="url(#sw-ag)"/><text x="528" y="553" text-anchor="start" style="font-size:15px;font-weight:400;fill:var(--ink-2)">泳道内流转</text><path d="M660 548H706" style="stroke:var(--clay);stroke-width:2.6" marker-end="url(#sw-aa)"/><text x="718" y="553" text-anchor="start" style="font-size:15px;font-weight:700;fill:var(--clay)">跨泳道交接（共 6 次）</text></svg>
+  </div>
+  <div class="foot"><span class="src"><b>出处</b> 示例流程</span><span class="cav">说明：示意，以实际业务为准</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【读图】横着看阶段，竖着看谁负责。先看灰色箭头：泳道内是顺的。</p><p data-s="1">【指交接】强调色是跨泳道交接，一共 6 次，问题都出在这里。</p><p class="ed">编辑提示：全幅页（data-zone="full"），结论写进标题；SVG 颜色只写 var(--token)；跨泳道箭头用 class="mx-draw step" + pathLength="1"（M1）。</p></aside>
+</section>
+
+<!-- T21 旅程情绪曲线（全幅页） -->
+<section class="slide" id="s-journey" data-zone="full" data-cat="case" data-title="旅程情绪曲线" data-key="付钱的客户一条、使用的用户一条；痛点与 aha 点，以及两条旅程如何相互影响。" data-sec-time="140" data-tier="c">
+  <div class="eyebrow">第 3 章 · 案例 · 两条旅程<span class="ptag">案例 · 团餐</span></div>
+  <h2>客户和用户分开画，<mark>两条</mark>旅程互相影响</h2>
+  <div class="body" style="gap:14px;margin-top:18px">
+    <p class="lede" style="margin-top:0">两条旅程共 <b class="fnum" data-count="5">5</b> 个痛点、<b class="fnum" data-count="4">4</b> 个 aha 点；虚线是一条旅程对另一条的影响。</p>
+    <svg class="dgm" viewBox="0 0 1424 500" width="1424" height="500" role="img" aria-label="两条旅程的情绪曲线：客户 5 个阶段痛点与 aha 点，用户 7 个阶段"><defs><marker id="jy-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-3)"/></marker><marker id="jy-aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--clay)"/></marker><marker id="jy-ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-2)"/></marker></defs><rect x="0" y="0" width="136" height="204" rx="14" style="fill:color-mix(in srgb,var(--sky) 14%,var(--card));stroke:var(--sky);stroke-width:1.5"/><text x="22" y="46" text-anchor="start" style="font-size:32px;font-weight:800;fill:var(--sky)">B</text><text x="22" y="88" text-anchor="start" style="font-size:20px;font-weight:700;fill:var(--ink)">客户旅程</text><text x="22" y="114" text-anchor="start" style="font-size:15px;font-weight:400;fill:var(--ink-2)">付钱的一方</text><rect x="150" y="0" width="1274" height="204" rx="14" style="fill:color-mix(in srgb,var(--sky) 5%,var(--card))"/><rect x="164" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="246.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">选型比较</text><rect x="345" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="427.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">签约</text><rect x="526" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="608.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">开餐筹备</text><rect x="707" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="789.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">首月运营</text><rect x="888" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="970.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">日常管理</text><rect x="1069" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="1151.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">月度结算</text><rect x="1250" y="10" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--sky);stroke-width:1.5"/><text x="1332.5" y="33" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--sky)">续约决策</text><line x1="164" x2="1414" y1="104" y2="104" style="stroke:var(--line);stroke-dasharray:4 5"/><text x="166" y="96" text-anchor="start" style="font-size:14px;font-weight:400;fill:var(--ink-3)">情绪</text><polyline points="246.5,136 427.5,84 608.5,132 789.5,80 970.5,136 1151.5,96 1332.5,68" style="fill:none;stroke:var(--sky);stroke-width:2.6;stroke-linejoin:round"/><circle cx="246.5" cy="136" r="12" style="fill:var(--warn)"/><text x="246.5" y="141.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">!</text><rect x="188.5" y="164" width="116" height="30" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><text x="246.5" y="184" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">方案难以对比</text><circle cx="427.5" cy="84" r="5" style="fill:var(--sky)"/><circle cx="608.5" cy="132" r="12" style="fill:var(--warn)"/><text x="608.5" y="137.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">!</text><rect x="550.5" y="164" width="116" height="30" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><text x="608.5" y="184" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">开餐筹备繁琐</text><circle cx="789.5" cy="80" r="12" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="789.5" y="85.5" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><rect x="731.5" y="164" width="116" height="30" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><text x="789.5" y="184" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">首月用餐报告</text><circle cx="970.5" cy="136" r="12" style="fill:var(--warn)"/><text x="970.5" y="141.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">!</text><rect x="912.5" y="164" width="116" height="30" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><text x="970.5" y="184" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">员工投诉压力</text><circle cx="1151.5" cy="96" r="5" style="fill:var(--sky)"/><circle cx="1332.5" cy="68" r="12" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="1332.5" y="73.5" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><rect x="1267" y="164" width="131" height="30" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><text x="1332.5" y="184" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">续约前价值报告</text><rect x="0" y="268" width="136" height="204" rx="14" style="fill:color-mix(in srgb,var(--kraft) 14%,var(--card));stroke:var(--kraft);stroke-width:1.5"/><text x="22" y="314" text-anchor="start" style="font-size:32px;font-weight:800;fill:var(--kraft)">C</text><text x="22" y="356" text-anchor="start" style="font-size:20px;font-weight:700;fill:var(--ink)">用户旅程</text><text x="22" y="382" text-anchor="start" style="font-size:15px;font-weight:400;fill:var(--ink-2)">真正使用的一方</text><rect x="150" y="268" width="1274" height="204" rx="14" style="fill:color-mix(in srgb,var(--kraft) 5%,var(--card))"/><rect x="164" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="246.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">知晓</text><rect x="345" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="427.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">浏览选餐</text><rect x="526" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="608.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">下单</text><rect x="707" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="789.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">等餐取餐</text><rect x="888" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="970.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">用餐</text><rect x="1069" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="1151.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">反馈</text><rect x="1250" y="278" width="165" height="34" rx="9" style="fill:var(--card);stroke:var(--kraft);stroke-width:1.5"/><text x="1332.5" y="301" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--kraft)">复购</text><line x1="164" x2="1414" y1="372" y2="372" style="stroke:var(--line);stroke-dasharray:4 5"/><text x="166" y="364" text-anchor="start" style="font-size:14px;font-weight:400;fill:var(--ink-3)">情绪</text><polyline points="246.5,372 427.5,396 608.5,368 789.5,404 970.5,340 1151.5,376 1332.5,344" style="fill:none;stroke:var(--kraft);stroke-width:2.6;stroke-linejoin:round"/><circle cx="246.5" cy="372" r="5" style="fill:var(--kraft)"/><circle cx="427.5" cy="396" r="12" style="fill:var(--warn)"/><text x="427.5" y="401.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">!</text><rect x="369.5" y="432" width="116" height="30" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><text x="427.5" y="452" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">选择少、重复</text><circle cx="608.5" cy="368" r="5" style="fill:var(--kraft)"/><circle cx="789.5" cy="404" r="12" style="fill:var(--warn)"/><text x="789.5" y="409.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">!</text><rect x="739" y="432" width="101" height="30" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><text x="789.5" y="452" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">等餐时间长</text><circle cx="970.5" cy="340" r="12" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="970.5" y="345.5" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><rect x="905" y="432" width="131" height="30" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><text x="970.5" y="452" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">口味对、送得准</text><circle cx="1151.5" cy="376" r="5" style="fill:var(--kraft)"/><circle cx="1332.5" cy="344" r="12" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="1332.5" y="349.5" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><rect x="1274.5" y="432" width="116" height="30" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><text x="1332.5" y="452" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">新品带来惊喜</text><path d="M789.5 276V214" style="fill:none;stroke:var(--ink-2);stroke-width:2;stroke-dasharray:6 5" marker-end="url(#jy-ad)"/><rect x="803.5" y="230" width="174" height="30" rx="15" style="fill:var(--card);stroke:var(--ink-3);stroke-width:1.2"/><text x="890.5" y="250" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink-2)">首餐体验决定首月评价</text><path d="M1332.5 276V214" style="fill:none;stroke:var(--ink-2);stroke-width:2;stroke-dasharray:6 5" marker-end="url(#jy-ad)"/><rect x="1159.5" y="230" width="159" height="30" rx="15" style="fill:var(--card);stroke:var(--ink-3);stroke-width:1.2"/><text x="1239" y="250" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink-2)">复购率支撑续约决策</text></svg>
+  </div>
+  <div class="foot"><span class="src"><b>出处</b> 示例访谈</span><span class="cav">说明：示意，以样本客户实际访谈为准</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【读图】上面是付钱的客户，下面是真正吃饭的员工。红色是痛点，星号是 aha 点。虚线说明员工的体验怎么影响客户的判断。</p><p class="ed">编辑提示：数字滚动用 data-count（M4），HTML 里先写终值。情绪值写在生成脚本里，范围 −1 到 1。</p></aside>
+</section>
+
+<!-- T22 叠图对照（全幅页） -->
+<section class="slide" id="s-overlay" data-zone="full" data-cat="case" data-title="叠图对照" data-key="两条旅程叠回现状泳道图；逐个点亮三处交叉点，编号对应下方卡片。" data-sec-time="170" data-tier="c">
+  <div class="eyebrow">第 3 章 · 案例 · 叠图对照<span class="ptag">案例 · 团餐</span></div>
+  <h2>员工的卡点，<mark>决定</mark>行政续不续约</h2>
+  <div class="body" data-mx="focus" style="gap:14px;margin-top:18px">
+    <svg class="dgm" viewBox="0 0 1424 440" width="1424" height="440" role="img" aria-label="客户旅程与用户旅程叠在现状泳道图上，三处交叉点"><defs><marker id="ov-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-3)"/></marker><marker id="ov-aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--clay)"/></marker><marker id="ov-ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-2)"/></marker></defs><rect x="150" y="0" width="1274" height="64" rx="12" style="fill:color-mix(in srgb,var(--sky) 8%,var(--card))"/><rect x="0" y="0" width="140" height="64" rx="12" style="fill:var(--sky)"/><text x="70" y="38" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#fff">B 客户</text><rect x="417.5" y="16" width="101" height="32" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><circle cx="417.5" cy="32" r="10" style="fill:var(--warn)"/><text x="417.5" y="37" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">!</text><text x="472" y="37" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">方案难对比</text><rect x="834" y="16" width="116" height="32" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><circle cx="834" cy="32" r="10" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="834" y="37" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><text x="896" y="37" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">首月用餐报告</text><rect x="1053.5" y="16" width="101" height="32" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><circle cx="1053.5" cy="32" r="10" style="fill:var(--warn)"/><text x="1053.5" y="37" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">!</text><text x="1108" y="37" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">员工投诉多</text><rect x="1258" y="16" width="116" height="32" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><circle cx="1258" cy="32" r="10" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="1258" y="37" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><text x="1320" y="37" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">续约价值报告</text><path d="M152 72H344L360 88L344 104H152L168 88Z" style="fill:var(--ink)"/><text x="260" y="94" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">签约交接</text><path d="M364 72H556L572 88L556 104H364L380 88Z" style="fill:var(--ink)"/><text x="472" y="94" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">需求诊断</text><path d="M576 72H768L784 88L768 104H576L592 88Z" style="fill:var(--ink)"/><text x="684" y="94" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">方案配置</text><path d="M788 72H980L996 88L980 104H788L804 88Z" style="fill:var(--ink)"/><text x="896" y="94" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">上线开餐</text><path d="M1000 72H1192L1208 88L1192 104H1000L1016 88Z" style="fill:var(--ink)"/><text x="1108" y="94" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">日常运营</text><path d="M1212 72H1404L1420 88L1404 104H1212L1228 88Z" style="fill:var(--ink)"/><text x="1320" y="94" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--paper)">续约</text><text x="70" y="94" text-anchor="middle" style="font-size:15px;font-weight:400;fill:var(--ink-3)">现状泳道 →</text><rect x="150" y="112" width="1274" height="80" style="fill:var(--paper-2);opacity:.55"/><rect x="0" y="117" width="140" height="70" rx="10" style="fill:var(--paper-2)"/><text x="70" y="158" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--ink)">客户企业</text><rect x="0" y="197" width="140" height="70" rx="10" style="fill:var(--paper-2)"/><text x="70" y="238" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--ink)">交付运营</text><rect x="150" y="272" width="1274" height="80" style="fill:var(--paper-2);opacity:.55"/><rect x="0" y="277" width="140" height="70" rx="10" style="fill:var(--paper-2)"/><text x="70" y="318" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--ink)">供应链</text><rect x="171" y="134" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="256" y="157.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">确认用餐需求</text><rect x="1231" y="134" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1316" y="157.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">续约评估</text><rect x="171" y="214" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="256" y="237.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">接收交接</text><rect x="383" y="214" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="468" y="237.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">现场诊断</text><rect x="595" y="214" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="680" y="237.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">制定方案</text><rect x="807" y="214" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="892" y="237.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">开餐保障</text><rect x="1019" y="214" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1104" y="237.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">巡检客诉</text><rect x="1231" y="214" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1316" y="237.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">续约沟通</text><rect x="595" y="294" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="680" y="317.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">选品配菜</text><rect x="807" y="294" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="892" y="317.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">备餐配送</text><rect x="1019" y="294" width="170" height="36" rx="9" style="fill:var(--card);stroke:var(--line);stroke-width:1.5"/><text x="1104" y="317.5" text-anchor="middle" style="font-size:15px;font-weight:600;fill:var(--ink)">履约交付</text><path d="M341 232H379" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M553 232H591" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M765 232H803" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M977 232H1015" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M1189 232H1227" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M765 312H803" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M977 312H1015" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M256 170V210" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M680 250V290" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><path d="M1316 214V174" style="fill:none;stroke:var(--ink-3);stroke-width:1.5" marker-end="url(#ov-ag)"/><rect x="150" y="372" width="1274" height="64" rx="12" style="fill:color-mix(in srgb,var(--kraft) 8%,var(--card))"/><rect x="0" y="372" width="140" height="64" rx="12" style="fill:var(--kraft)"/><text x="70" y="410" text-anchor="middle" style="font-size:17px;font-weight:700;fill:#fff">C 员工</text><rect x="410" y="388" width="116" height="32" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><circle cx="410" cy="404" r="10" style="fill:var(--warn)"/><text x="410" y="409" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">!</text><text x="472" y="409" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">选择少、重复</text><rect x="841.5" y="388" width="101" height="32" rx="8" style="fill:color-mix(in srgb,var(--warn) 12%,var(--card))"/><circle cx="841.5" cy="404" r="10" style="fill:var(--warn)"/><text x="841.5" y="409" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">!</text><text x="896" y="409" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--warn)">等餐时间长</text><rect x="1068.5" y="388" width="71" height="32" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><circle cx="1068.5" cy="404" r="10" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="1068.5" y="409" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><text x="1108" y="409" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">口味对</text><rect x="1273" y="388" width="86" height="32" rx="8" style="fill:var(--card);stroke:var(--clay);stroke-width:1.5"/><circle cx="1273" cy="404" r="10" style="fill:var(--card);stroke:var(--clay);stroke-width:2"/><text x="1273" y="409" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--clay)">★</text><text x="1320" y="409" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">新品惊喜</text><g class="step" data-step="1" data-f="1"><rect x="801" y="288" width="182" height="48" rx="12" style="fill:none;stroke:var(--clay);stroke-width:3"/><path d="M892 388V338" style="fill:none;stroke:var(--clay);stroke-width:2.6;stroke-dasharray:7 5" marker-end="url(#ov-aa)"/><path d="M983 312H992V30H956" style="fill:none;stroke:var(--clay);stroke-width:2.6;stroke-dasharray:7 5" marker-end="url(#ov-aa)"/><circle cx="801" cy="288" r="14" style="fill:var(--clay)"/><text x="801" y="293.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">1</text></g><g class="step" data-step="2" data-f="2"><rect x="589" y="288" width="182" height="48" rx="12" style="fill:none;stroke:var(--clay);stroke-width:3"/><path d="M468 388V364H680V338" style="fill:none;stroke:var(--clay);stroke-width:2.6;stroke-dasharray:7 5" marker-end="url(#ov-aa)"/><path d="M771 312H780V66H1104V52" style="fill:none;stroke:var(--clay);stroke-width:2.6;stroke-dasharray:7 5" marker-end="url(#ov-aa)"/><circle cx="589" cy="288" r="14" style="fill:var(--clay)"/><text x="589" y="293.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">2</text></g><g class="step" data-step="3" data-f="3"><rect x="1225" y="208" width="182" height="48" rx="12" style="fill:none;stroke:var(--clay);stroke-width:3"/><path d="M1316 388V258" style="fill:none;stroke:var(--clay);stroke-width:2.6;stroke-dasharray:7 5" marker-end="url(#ov-aa)"/><path d="M1407 232H1413V30H1380" style="fill:none;stroke:var(--clay);stroke-width:2.6;stroke-dasharray:7 5" marker-end="url(#ov-aa)"/><circle cx="1225" cy="208" r="14" style="fill:var(--clay)"/><text x="1225" y="213.5" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">3</text></g></svg>
+    <div class="xcs">
+      <div class="xc step" data-step="1" data-f="1"><b>交叉 ① · 首餐体验决定首月评价</b>员工 <strong>等餐时间长</strong> → 客户 首月用餐报告<br>卡在：<strong>备餐配送</strong>（供应链）</div>
+      <div class="xc step" data-step="2" data-f="2"><b>交叉 ② · 选择少拖累口碑</b>员工 <strong>选择少、重复</strong> → 客户 员工投诉多<br>卡在：<strong>选品配菜</strong>（供应链）</div>
+      <div class="xc step" data-step="3" data-f="3"><b>交叉 ③ · 惊喜没变成续约理由</b>员工 <strong>新品惊喜</strong> → 客户 续约价值报告<br>卡在：<strong>续约沟通</strong>缺复购数据</div>
+    </div>
+  </div>
+  <div class="foot"><span class="src"><b>出处</b> 示例流程与访谈</span><span class="cav">说明：示意，以实际业务为准</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【读图】把两条旅程叠回泳道图：上面客户，下面员工，中间是我们的流程。</p><p data-s="1">【交叉①】员工等餐时间长，卡在备餐配送，最后变成客户的首月评价。</p><p data-s="2">【交叉②】选择少，卡在选品配菜，变成员工投诉。</p><p data-s="3">【交叉③】新品惊喜本来是好事，但续约沟通时没有复购数据，用不上。</p><p class="ed">编辑提示：SVG 里每个交叉点是 &lt;g class="step" data-step="N" data-f="N"&gt;，与下方卡片同号；容器 data-mx="focus" 只亮当前交叉点（M2）。</p></aside>
+</section>
+
+<!-- T23 练习页（计时器） -->
+<section class="slide" id="s-ex" data-cat="ex" data-title="练习页" data-key="三轮练习：自己画、与 AI 共创、整理导出；页头倒计时；怎么算过。" data-sec-time="60" data-tier="c">
+  <div class="eyebrow">练习 · 客户旅程<span class="ptag">练习 · 40 分钟</span></div>
+  <div class="exh"><h2>练习：画出你的客户旅程</h2><div class="tm" data-min="40"></div></div>
+  <div class="body">
+    <div class="rounds">
+      <div class="rd"><span class="pill">第一轮 · 自己画　10 分钟</span><h3>站到客户那一侧</h3><ol><li>先定主体：付钱和使用的是不是同一拨人</li><li>按客户的动作切 6–8 个阶段</li><li>每个阶段标出痛点和 aha 点</li></ol><span class="ft2">写不出依据的，先标“估”。</span></div>
+      <div class="rd hot"><span class="pill">第二轮 · 与 AI 共创　20 分钟</span><h3>逐个阶段追问</h3><ol><li>让 AI 先检查哪些阶段其实是内部视角</li><li>一个阶段一个阶段追问：想要什么、哪里难受</li><li>把痛点对回现状泳道图</li></ol><span class="ft2">说不出依据的，标“待核实”。</span></div>
+      <div class="rd"><span class="pill">第三轮 · 整理导出　10 分钟</span><h3>导出两份文件</h3><ol><li>客户旅程图（HTML）</li><li>痛点与卡点对照表</li></ol><span class="ft2">下一个练习还要交给 AI 用。</span></div>
+    </div>
+    <div class="cl std"><span class="lb">怎么算过</span><div>阶段写的是<b>客户在做的事</b>；至少 3 个痛点、1 个 aha 点；每个痛点都对回了泳道图。</div></div>
+  </div>
+  <div class="foot"><span class="src"><b>练习</b> 个人完成，第二轮可两人一组</span><span class="pageno"></span></div>
+  <aside class="notes"><p data-s="0">【布置练习】一共 40 分钟，分三轮。我现在开始计时。</p><p class="ed">编辑提示：计时器 &lt;div class="tm" data-min="40"&gt;，点击开始 / 暂停，↺ 重置，翻页不中断。练习页加 data-cat="ex"，标签与页码变成练习色。</p></aside>
 </section>
 
 <!-- T12 结尾 -->
@@ -1358,7 +1679,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
 <button id="scrBtn" class="fbtn" type="button" aria-label="打开逐字稿">逐字稿</button>
 <div id="segbar" aria-label="章节进度"></div>
 <div id="nav" class="drawer left" role="dialog" aria-label="目录">
-  <div class="dh"><b>目录 · HTML Deck Kit v2.0</b><label for="navIn" class="tip">跳到</label><input id="navIn" inputmode="numeric" autocomplete="off" placeholder="页码" aria-label="页码"><button class="x" id="navX" type="button">关闭</button></div>
+  <div class="dh"><b>目录 · HTML Deck Kit v2.2</b><label for="navIn" class="tip">跳到</label><input id="navIn" inputmode="numeric" autocomplete="off" placeholder="页码" aria-label="页码"><button class="x" id="navX" type="button">关闭</button></div>
   <div class="tip" style="padding:0 18px 8px">点章节展开，再点具体页跳转 · 每页右侧“隐藏”可跳过不讲 · H 临时显示全部隐藏页 · Esc 关闭</div>
   <div class="navsum" id="navSum"></div>
   <div id="navTree"></div>
@@ -1409,7 +1730,9 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
   slides.forEach(s=>{const b=document.createElement('div');b.className='hidbadge';b.textContent='隐藏页 · 正常翻页会跳过';s.append(b)});
   let si=0, st=0, t0=Date.now();
   try{const h=parseInt((location.hash||'').replace(/\D/g,''),10);if(h>0&&h<=slides.length)si=h-1}catch(e){}
-  const steps=s=>[...s.querySelectorAll('.step')];
+  const steps=s=>{const els=[...s.querySelectorAll('.step')];if(!els.some(e=>e.dataset.step))return els.map(e=>[e]);const m=new Map();els.forEach(e=>{const k=+(e.dataset.step||0);if(!m.has(k))m.set(k,[]);m.get(k).push(e)});return [...m.keys()].sort((a,b)=>a-b).map(k=>m.get(k))};
+  const mxOK=()=>window.__mxOK?window.__mxOK():true;
+  function vt(a,fn){if(a!==si&&document.startViewTransition&&mxOK()&&slides[a]&&slides[a].querySelector('[data-morph]')&&slides[si].querySelector('[data-morph]')){try{document.startViewTransition(fn);return}catch(e){}}fn()}
   const note=(s,k)=>{const p=s.querySelector('aside.notes p[data-s="'+k+'"]');return p?p.textContent:''};
   const clean=t=>t.replace(/\s+/g,' ').trim();
   const popText=(e)=>{if(e.tagName==='TABLE'||e.querySelector('table')){const th=[...e.querySelectorAll('th')].map(x=>clean(x.textContent)).join(' / ');return '表格：'+th} let t=clean(e.innerText||e.textContent||''); if(!t){const im=e.querySelector('img');t=im?('图片：'+(im.alt||'')):'（图表）'} return t.length>70?t.slice(0,70)+'…':t};
@@ -1442,8 +1765,8 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
   }
   function openNav(prefill){closeScr();nav.classList.add('open');navIn.value=prefill||'';const cs=secOf(si);secs.forEach(x=>{const open=x===cs;x.list.hidden=!open;x.ar.textContent=open?'▾':'▸'});tree.querySelectorAll('.pg').forEach(b=>b.classList.toggle('cur',+b.dataset.i===si));setTimeout(()=>navIn.focus(),0)}
   function closeNav(){nav.classList.remove('open');navIn.blur()}
-  function jump(i,s){si=Math.min(Math.max(i,0),slides.length-1);st=s||0;render()}
-  window.__deck={slides,IDS,secOf,isHid,setHid,skip,nxt,jump,cur:()=>si,get ORD(){return ORD.slice()},
+  function jump(i,s){const a=si;si=Math.min(Math.max(i,0),slides.length-1);st=s||0;vt(a,()=>render())}
+  window.__deck={steps,slides,IDS,secOf,isHid,setHid,skip,nxt,jump,cur:()=>si,get ORD(){return ORD.slice()},
     setOrder(o){ORD=o.slice();try{localStorage.setItem(OK,JSON.stringify(ORD.map(i=>IDS[i])))}catch(e){};paintHid();render(false)},
     resetOrder(){ORD=slides.map((s,i)=>i);try{localStorage.removeItem(OK)}catch(e){};paintHid();render(false)},
     resetTimer(){t0=Date.now()},repaint(){paintHid();render(false)}};
@@ -1458,7 +1781,7 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
     const k=el('div','sk'); k.append(el('div','sl','本页重点 · 建议 '+Math.round((+s.dataset.secTime||60)/60*10)/10+' 分钟'), el('div','sv',s.dataset.key||'')); scrBody.append(k);
     for(let j=0;j<=ss.length;j++){
       const row=el('button','srow'+(j===st?' cur':'')); row.type='button';
-      const lab=el('div','sh'); lab.append(el('span','sb',j===0?'翻页进入':'弹出 '+j)); if(j>0) lab.append(el('span','sp',popText(ss[j-1])));
+      const lab=el('div','sh'); lab.append(el('span','sb',j===0?'翻页进入':'弹出 '+j)); if(j>0) lab.append(el('span','sp',popText(ss[j-1][0])));
       row.append(lab, el('div','st2',note(s,j)||'（无讲稿）'));
       row.onclick=()=>{st=j;render()}; scrBody.append(row);
     }
@@ -1472,14 +1795,15 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
   document.getElementById('scrX').onclick=closeScr;
   /* ---- full script ---- */
   const full=document.getElementById('full'), fullBody=document.getElementById('fullBody');
-  function buildFull(){fullBody.textContent='';slides.forEach((s,i)=>{const sec=el('section','fs');sec.append(el('h4',null,String(i+1).padStart(2,'0')+'  '+s.dataset.title+(isHid(i)?'（隐藏页）':'')));sec.append(el('p','fk','重点：'+(s.dataset.key||'')));const ss=steps(s);for(let j=0;j<=ss.length;j++){const r=el('div','fr');r.append(el('b',null,j===0?'【翻页】':'【弹出 '+j+'】'+popText(ss[j-1])+'　'));r.append(document.createTextNode(note(s,j)));sec.append(r)}fullBody.append(sec)})}
+  function buildFull(){fullBody.textContent='';slides.forEach((s,i)=>{const sec=el('section','fs');sec.append(el('h4',null,String(i+1).padStart(2,'0')+'  '+s.dataset.title+(isHid(i)?'（隐藏页）':'')));sec.append(el('p','fk','重点：'+(s.dataset.key||'')));const ss=steps(s);for(let j=0;j<=ss.length;j++){const r=el('div','fr');r.append(el('b',null,j===0?'【翻页】':'【弹出 '+j+'】'+popText(ss[j-1][0])+'　'));r.append(document.createTextNode(note(s,j)));sec.append(r)}fullBody.append(sec)})}
   document.getElementById('scrAll').onclick=()=>{buildFull();full.classList.add('open')};
   document.getElementById('fullX').onclick=()=>full.classList.remove('open');
   document.getElementById('fullPrint').onclick=()=>{document.body.classList.add('printing');window.print();setTimeout(()=>document.body.classList.remove('printing'),500)};
   function closeAll(){closeNav();full.classList.remove('open')}
   function render(broadcast){
     slides.forEach((s,i)=>s.classList.toggle('active',i===si));
-    const ss=steps(slides[si]); ss.forEach((e,i)=>e.classList.toggle('on',i<st));
+    const ss=steps(slides[si]); ss.forEach((g,i)=>g.forEach(e=>e.classList.toggle('on',i<st&&!(e.hasAttribute('data-only')&&i!==st-1)&&!(e.dataset.out&&st>=+e.dataset.out))));
+    slides[si].querySelectorAll('[data-out]:not(.step)').forEach(e=>e.classList.toggle('gone',st>=+e.dataset.out));
     const total=slides.reduce((a,s)=>a+steps(s).length+1,0);
     const done=slides.slice(0,si).reduce((a,s)=>a+steps(s).length+1,0)+st+1;
     document.getElementById('progress').style.width=(done/total*100)+'%';
@@ -1501,10 +1825,10 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
     if(broadcast!==false) send();
   }
   function go(d){
-    const n=steps(slides[si]).length;
+    const a=si, n=steps(slides[si]).length;
     if(d>0){ if(st<n) st++; else {const j=nxt(si,1); if(j>=0){si=j;st=0}} }
     else { if(st>0) st--; else {const j=nxt(si,-1); if(j>=0){si=j;st=steps(slides[si]).length}} }
-    render();
+    vt(a,()=>render());
   }
   let bc=null; try{bc=new BroadcastChannel('deckkit-sync')}catch(e){}
   function send(){const m={si,st,ts:Date.now()};try{bc&&bc.postMessage(m)}catch(e){};try{localStorage.setItem('deckkit-sync',JSON.stringify(m))}catch(e){}}
@@ -1542,7 +1866,6 @@ h2 mark,.big mark,.stm mark{background:linear-gradient(transparent 58%,color-mix
   document.getElementById('bS').onclick=toggleScr;
   document.getElementById('bP').onclick=togglePresenter;
   document.getElementById('bF').onclick=fs;
-  setTimeout(()=>document.getElementById('hint').classList.add('fade'),6000);
   setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);document.getElementById('pvTimer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
   paintHid(); fit(); render(false);
 })();
@@ -1625,6 +1948,7 @@ const toast=document.createElement('div');toast.id='fsToast';document.body.appen
 /* V2.1：按页自动适配。请求档位 LV[fz]；若该页超出安全线，则逐档降低，取不超线的最大档。
    data-czmax 仍可写在某一页上作为该页的手动上限。 */
 const LIM_BODY=630,LIM_ACT=780,LIM_HERO=735;
+const zoneLim=s=>s.dataset.zone==='full'?830:s.dataset.zone==='75'?675:LIM_BODY;window.__zoneLim=zoneLim;
 function measureBottom(s){
   const hero=s.classList.contains('hero'),act=s.classList.contains('act');
   const sel=hero?'.sub2,.who':act?'.q,.tracker':':scope > .body,:scope > .kick,:scope > .insight,:scope > .mdl';
@@ -1637,7 +1961,7 @@ function measureBottom(s){
   if(!was)s.style.display=disp;mv.forEach((e,j)=>e.style.translate=sv[j]);return bot}
 function fitSlide(sl){
   const hero=sl.classList.contains('hero'),act=sl.classList.contains('act');
-  const lim=hero?LIM_HERO:act?LIM_ACT:LIM_BODY,cap=parseFloat(sl.dataset.czmax||'9');
+  const lim=hero?LIM_HERO:act?LIM_ACT:zoneLim(sl),cap=parseFloat(sl.dataset.czmax||'9');
   let k=fz;while(k>0&&LV[k]>cap)k--;
   for(;k>0;k--){sl.style.setProperty('--cz',LV[k]);if(measureBottom(sl)<=lim)break}
   sl.style.setProperty('--cz',LV[k]);sl.dataset.fit=String(LV[k]);return LV[k]}
@@ -1653,6 +1977,7 @@ function applyFz(show){
     msg+='（按 + / − 调整）';
     toast.textContent=msg;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),1800)}}
 function bump(d){fz=Math.max(0,Math.min(LV.length-1,fz+d));applyFz(true)}
+window.__setFz=i=>{fz=Math.max(0,Math.min(LV.length-1,i|0));applyFz(false)};window.__fzLevels=LV.slice();
 applyFz(false);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>applyFz(false));
 new MutationObserver(()=>{clearTimeout(window.__fzT);window.__fzT=setTimeout(()=>applyFz(false),40)}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
@@ -1676,8 +2001,8 @@ document.querySelectorAll('.qd').forEach(q=>{const info=q.querySelector('.qinfo'
 <script>
 (function(){
 /* ---- 主题切换：T 键 / ?theme= / 本机记忆 ---- */
-const TH=['warm','mono','void','lunar','linen','stellar'];
-const TN={warm:'暖纸 · warm',mono:'极简黑白 · mono',void:'深空 · void',lunar:'月光 · lunar',linen:'素白 · linen',stellar:'星光渐变 · stellar'};
+const TH=['warm','mono','void','lunar','linen','stellar','notebook'];
+const TN={warm:'暖纸 · warm',mono:'极简黑白 · mono',void:'深空 · void',lunar:'月光 · lunar',linen:'素白 · linen',stellar:'星光渐变 · stellar',notebook:'纸本 · notebook'};
 const TK='deckkit-theme';const root=document.documentElement;
 let th=root.dataset.theme||'warm';
 try{const q=new URLSearchParams(location.search).get('theme');const s=localStorage.getItem(TK);if(q&&TH.includes(q))th=q;else if(s&&TH.includes(s))th=s}catch(e){}
@@ -1711,7 +2036,9 @@ const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=nu
 const ttl=i=>S[i].dataset.title||IDS[i];
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 /* ---------- 缩略图：克隆页面，去掉 id 与动画画布 ---------- */
-function thumbInto(box,i,w){box.textContent='';const th=el('div','dk-th');const c=S[i].cloneNode(true);
+const TIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting&&x.target._ti){const a=x.target._ti;x.target._ti=null;TIO.unobserve(x.target);thumbNow(x.target,a[0],a[1])}}),{rootMargin:'200px'}):null;
+function thumbInto(box,i,w){if(TIO&&box.closest&&box.closest('#srt')){box.textContent='';box._ti=[i,w];TIO.observe(box);return}thumbNow(box,i,w)}
+function thumbNow(box,i,w){box.textContent='';const th=el('div','dk-th');const c=S[i].cloneNode(true);c.classList.add('mx-final');c.querySelectorAll('[data-morph]').forEach(x=>x.style.viewTransitionName='none');c.querySelectorAll('[data-count]').forEach(x=>x.textContent=x.dataset.count);c.querySelectorAll('.gone').forEach(x=>x.classList.remove('gone'));c.querySelectorAll('[data-out]:not(.step)').forEach(x=>x.classList.add('gone'));
   c.classList.add('active');c.classList.remove('is-hid');c.removeAttribute('id');c.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));
   c.querySelectorAll('canvas,video,aside.notes,.hidbadge').forEach(x=>x.remove());c.querySelectorAll('.step').forEach(x=>x.classList.add('on'));
   th.style.transform='scale('+(w/1600)+')';th.append(c);box.append(th)}
@@ -1804,7 +2131,7 @@ function balance(){S.forEach(s=>{if(s.classList.contains('hero')||s.classList.co
   mv.forEach(x=>x.querySelectorAll('*').forEach(e=>{const q=e.getBoundingClientRect();if(q.height>0)bot=Math.max(bot,(q.bottom-top)/k)}));
   mv.forEach(x=>{const q=x.getBoundingClientRect();if(q.height>0)bot=Math.max(bot,(q.bottom-top)/k)});
   if(!was)s.style.display='';
-  const d=Math.round((LIMIT-bot)*0.4);if(d>40)mv.forEach(x=>x.style.translate='0 '+Math.min(d,140)+'px')})}
+  const d=Math.round(((window.__zoneLim?window.__zoneLim(s):LIMIT)-bot)*0.4);if(d>40)mv.forEach(x=>x.style.translate='0 '+Math.min(d,140)+'px')})}
 let bT;const reb=()=>{clearTimeout(bT);bT=setTimeout(balance,120)};
 window.__balance=balance;
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(reb);else reb();
@@ -1822,6 +2149,87 @@ document.addEventListener('keydown',e=>{const k=e.key,inText=e.target.closest&&e
 },true);
 $('bO').onclick=e=>{e.stopPropagation();openSRT()};$('bE').onclick=e=>{e.stopPropagation();openFB()};
 paintFbN();window.__deckv2={openSRT,closeSRT,openFB,openFBS,balance};
+})();
+</script>
+<script>
+/* =====================================================================
+   v2.2 add-on · 用途型动效（M1–M6）· M 动效开关 · K 对外放映 · 功能区自动隐藏
+   · 计时器 · 症状对照 · 金句标点悬挂 · 分类色进度条 · 打印
+   依赖引擎暴露的 window.__deck；不改页面内容。
+   ===================================================================== */
+(function(){
+const D=window.__deck; if(!D) return;
+const S=D.slides, body=document.body;
+const LSg=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:v}catch(e){return d}};
+const LSs=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+function toast(t){let el=document.getElementById('fsToast');if(!el){el=document.createElement('div');el.id='fsToast';body.append(el)}
+  el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),1800)}
+const mxOK=()=>!body.classList.contains('nomx')&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+window.__mxOK=mxOK;
+if(LSg('deckkit-motion','1')==='0')body.classList.add('nomx');
+if(LSg('deckkit-clean','0')==='1')body.classList.add('clean');
+
+/* ---------- M5 跨页变形：同名 data-morph 元素在相邻两页之间自动变形 ---------- */
+S.forEach(s=>s.querySelectorAll('[data-morph]').forEach(e=>{e.style.viewTransitionName='mx-'+String(e.dataset.morph).replace(/[^A-Za-z0-9_-]/g,'')}));
+
+/* ---------- 金句页：行尾标点悬挂 ---------- */
+document.querySelectorAll('.stm').forEach(e=>{e.innerHTML=e.innerHTML.replace(/([，。；：？！、,.;:?!”’」』）])(\s*)(?=<br\s*\/?>|$)/g,'<i class="hp">$1</i>$2')});
+
+/* ---------- M4 数字滚动：<b data-count="40">40</b>（可加 data-from） ---------- */
+const fmt=(v,dec,grp)=>{let s=v.toFixed(dec);if(grp){const p=s.split('.');s=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,',')+(p[1]?'.'+p[1]:'')}return s};
+function countRun(e){const fin=String(e.dataset.count),to=parseFloat(fin.replace(/,/g,'')),from=parseFloat(e.dataset.from||'0');
+  if(!isFinite(to)||!mxOK()){e.textContent=fin;return}
+  const dec=(fin.split('.')[1]||'').length,grp=fin.includes(','),t0=performance.now(),T=800;e._run=true;
+  const f=t=>{if(!e._run){e.textContent=fin;return}const k=Math.min(1,(t-t0)/T),q=1-Math.pow(1-k,3);e.textContent=fmt(from+(to-from)*q,dec,grp);if(k<1)requestAnimationFrame(f);else{e.textContent=fin;e._run=false}};
+  requestAnimationFrame(f)}
+
+/* ---------- M2 聚光 ---------- */
+function focus(s,st){s.querySelectorAll('[data-mx~="focus"]').forEach(c=>{const it=[...c.querySelectorAll('[data-f]')],max=Math.max(0,...it.map(e=>+e.dataset.f||0));
+  const on=st>=1&&st<=max;c.classList.toggle('mx-on',on);it.forEach(e=>e.classList.toggle('mx-cur',on&&+e.dataset.f===st))})}
+
+/* ---------- 分类色：进度条跟随页型 ---------- */
+function paintCat(s){const p=document.getElementById('progress');if(!p)return;p.style.background=s.dataset.cat?getComputedStyle(s).getPropertyValue('--pc').trim():''}
+
+document.addEventListener('deck:render',ev=>{const si=ev.detail.si,st=ev.detail.st,s=S[si];if(!s)return;
+  S.forEach((x,i)=>{if(i!==si)x.querySelectorAll('[data-count]').forEach(e=>{e._run=false;e._done=false;e.textContent=e.dataset.count})});
+  s.querySelectorAll('[data-count]').forEach(e=>{if(e.closest('.step:not(.on)')){e._run=false;e._done=false;e.textContent=e.dataset.count;return}
+    if(!e._done){e._done=true;countRun(e)}});
+  focus(s,st);paintCat(s)});
+
+/* ---------- 功能区自动隐藏（鼠标静止 2.6 秒淡出；演讲者视图常显） ---------- */
+let idleT;const wake=()=>{body.classList.remove('ui-idle');clearTimeout(idleT);idleT=setTimeout(()=>body.classList.add('ui-idle'),2600)};
+['mousemove','pointerdown','touchstart','keydown'].forEach(t=>document.addEventListener(t,e=>{if(t==='keydown'&&!['Tab'].includes(e.key))return;wake()},{passive:true}));
+wake();
+
+/* ---------- 计时器：<div class="tm" data-min="40"></div> ---------- */
+document.querySelectorAll('.tm[data-min]').forEach(tm=>{const full=Math.round(parseFloat(tm.dataset.min)*60)||60,g={left:full,end:0,iv:0};
+  tm.innerHTML='<button class="go" type="button" aria-label="开始或暂停计时"><i></i><span></span></button><button class="rs" type="button" aria-label="计时重置" title="重置">↺</button>';
+  const go=tm.querySelector('.go'),lab=go.querySelector('span'),ic=go.querySelector('i');
+  const f=x=>{x=Math.max(0,Math.ceil(x));return String(Math.floor(x/60)).padStart(2,'0')+':'+String(x%60).padStart(2,'0')};
+  const paint=()=>{lab.textContent=f(g.left);ic.innerHTML=g.iv?'<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><rect x="4" y="3" width="4" height="14" rx="1" fill="currentColor"/><rect x="12" y="3" width="4" height="14" rx="1" fill="currentColor"/></svg>':'<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M5 3l12 7-12 7z" fill="currentColor"/></svg>';tm.classList.toggle('run',!!g.iv);tm.classList.toggle('done',g.left<=0)};
+  const tick=()=>{g.left=(g.end-Date.now())/1000;if(g.left<=0){clearInterval(g.iv);g.iv=0;g.left=0}paint()};
+  go.addEventListener('click',e=>{e.stopPropagation();if(g.iv){clearInterval(g.iv);g.iv=0;g.left=(g.end-Date.now())/1000}else{if(g.left<=0)g.left=full;g.end=Date.now()+g.left*1000;g.iv=setInterval(tick,250)}paint()});
+  tm.querySelector('.rs').addEventListener('click',e=>{e.stopPropagation();clearInterval(g.iv);g.iv=0;g.left=full;paint()});
+  tm.addEventListener('pointerdown',e=>e.stopPropagation());paint()});
+
+/* ---------- 症状对照：点卡片打勾，不翻页 ---------- */
+document.querySelectorAll('.chk').forEach(b=>{b.setAttribute('aria-pressed','false');
+  b.addEventListener('click',e=>{e.stopPropagation();b.classList.toggle('on');b.setAttribute('aria-pressed',String(b.classList.contains('on')));
+    const s=b.closest('.slide'),n=s.querySelectorAll('.chk.on').length;s.querySelectorAll('[data-chk-n]').forEach(x=>x.textContent=n)})});
+
+/* ---------- 快捷键：M 动效开关；K 对外放映 ---------- */
+document.addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;const t=e.target;if(t&&t.closest&&t.closest('input,textarea,select,[contenteditable]'))return;
+  const k=e.key;
+  if(k==='m'||k==='M'){e.preventDefault();body.classList.toggle('nomx');const off=body.classList.contains('nomx');LSs('deckkit-motion',off?'0':'1');toast(off?'动效：关（只显示终态）':'动效：开')}
+  else if(k==='k'||k==='K'){e.preventDefault();body.classList.toggle('clean');const on=body.classList.contains('clean');LSs('deckkit-clean',on?'1':'0');toast(on?'对外放映：开（隐藏眉标、页码、说明与改稿入口）':'对外放映：关')}
+});
+
+/* ---------- 打印：一页一张；跳过隐藏页；数字显示终值 ---------- */
+window.addEventListener('beforeprint',()=>{if(body.classList.contains('printing'))return;body.classList.add('deckprint');
+  S.forEach((s,i)=>s.classList.toggle('pr-skip',D.skip(i)));document.querySelectorAll('[data-count]').forEach(e=>{e._run=false;e.textContent=e.dataset.count})});
+window.addEventListener('afterprint',()=>{body.classList.remove('deckprint');S.forEach(s=>s.classList.remove('pr-skip'))});
+
+window.__paint&&window.__paint();
 })();
 </script>
 

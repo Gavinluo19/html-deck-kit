@@ -109,6 +109,30 @@
 }
 [data-theme="stellar"] .kick em,[data-theme="stellar"] .insight em{background:linear-gradient(90deg,#4285F4,#9B72CB,#D96570);-webkit-background-clip:text;background-clip:text;color:transparent}
 
+/* ---------- 6. notebook（纸本 · Notebook，v2.2：暖米点阵 · 粗宋标题 · 墨线卡片 + 硬阴影） ---------- */
+[data-theme="notebook"]{
+  --paper:#F6F0E6; --paper-2:#EFE6D8; --card:#FFFDF8; --line:#E3D9CB;
+  --ink:#221D1A; --ink-2:#3B3431; --ink-3:#7A6E62;
+  --clay:#E4572E; --clay-soft:#FBE3D6; --kraft:#B8860B; --manilla:#FBF0CF;
+  --sky:#4A74B4; --sky-soft:#E3EBF6; --warn:#C0392B; --ok:#2E9073;
+  --slate:#2A2420; --on-slate:#F6F0E6; --on-slate-2:#B9AC9C;
+  --f-display:"Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong",serif;
+  --f-body:"Noto Sans SC","Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --stage-bg:#2A2420;
+  --hero-bg:#F6F0E6; --hero-ink:#221D1A; --hero-sub:#3B3431; --hero-org:#E4572E; --hero-credit:#9A8F83; --hero-lb:#7A6E62;
+  --hero-grad:linear-gradient(90deg,#221D1A 0%,#E4572E 100%);
+  --hero-veil:linear-gradient(90deg,rgba(246,240,230,.97) 0%,rgba(246,240,230,.86) 42%,rgba(246,240,230,.25) 100%);
+  --hero-grain:rgba(34,29,26,.22);
+  --net-1:122,110,98; --net-2:228,87,46; --net-3:184,134,11; --net-pulse:228,87,46;
+  --hl-line:#E4572E; --blue-line:#4A74B4; --frame-bg:#FFFDF8;
+  --nb-shadow:6px 6px 0 #DED4C5;
+}
+[data-theme="notebook"] .slide:not(.hero):not(.dark){background:var(--paper) radial-gradient(#DCD2C3 1.1px,transparent 1.5px) 0 0/26px 26px}
+[data-theme="notebook"] h2{font-weight:900}
+[data-theme="notebook"] :is(.box,.ex .e,.ovc,.flow3 .bx,.lvc,.rd,.chk,.ann,.xc,.scope .sn,.mc,.ovm){border:2px solid var(--ink);box-shadow:var(--nb-shadow)}
+[data-theme="notebook"] :is(.box.hl,.flow3 .bx.hl,.rd.hot,.chk.on){border-color:var(--clay)}
+[data-theme="notebook"] .hero .who .sep{background:rgba(0,0,0,.18)}
+
 /* ---------- 组件接入 token（覆盖引擎里的固定色值） ---------- */
 body{background:var(--stage-bg)}
 .slide.hero{background:var(--hero-bg);color:var(--hero-ink)}
